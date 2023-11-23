@@ -1,8 +1,12 @@
+VSRCDIR := $(CURDIR)/vsrc
 all:
 	@echo "Write this Makefile by your self."
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	@echo "Write this Makefile by your self."
+
+pre_dualswitch:
+	verilator --cc --exe --build -j 0 -Wall $(VSRCDIR)/pre_dual_switch/sim_main.cpp \
+		$(VSRCDIR)/pre_dual_switch/dual_switch.v 
 
 include ../Makefile
