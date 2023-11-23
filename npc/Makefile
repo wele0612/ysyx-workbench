@@ -7,8 +7,12 @@ sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 
 pre_dualswitch:
-	verilator --cc --exe --build -j 0 -Wall $(CSRCDIR)/pre_dual_switch/sim_main.cpp \
+	verilator --cc --exe --build -j --trace -Wall $(CSRCDIR)/pre_dual_switch/sim_main.cpp \
 		$(VSRCDIR)/pre_dual_switch/dual_switch.v 
+	ysyx_save_record
+
+ysyx_save_record:
+	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
 
 clean:
 	rm -r obj_dir
