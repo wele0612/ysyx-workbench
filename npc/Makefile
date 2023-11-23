@@ -11,8 +11,10 @@ pre_dualswitch:
 		$(VSRCDIR)/pre_dual_switch/dual_switch.v 
 	ysyx_save_record
 
+.PHONY: ysyx_save_record
 ysyx_save_record:
-	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
+	cd $(CURDIR)/..
+	$(call git_commit, "build simulation") # DO NOT REMOVE THIS LINE!!!
 
 clean:
 	rm -r obj_dir
