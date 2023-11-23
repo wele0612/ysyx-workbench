@@ -9,12 +9,7 @@ sim:
 pre_dualswitch:
 	verilator --cc --exe --build -j --trace -Wall $(CSRCDIR)/pre_dual_switch/sim_main.cpp \
 		$(VSRCDIR)/pre_dual_switch/dual_switch.v 
-	ysyx_save_record
-
-.PHONY: ysyx_save_record
-ysyx_save_record:
-	cd $(CURDIR)/..
-	$(call git_commit, "build simulation") # DO NOT REMOVE THIS LINE!!!
+	$(call git_commit, "built pre_dual_switch") # DO NOT REMOVE THIS LINE!!!
 
 clean:
 	rm -r obj_dir
