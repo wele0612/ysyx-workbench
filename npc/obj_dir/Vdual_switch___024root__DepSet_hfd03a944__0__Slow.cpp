@@ -48,7 +48,7 @@ VL_ATTR_COLD void Vdual_switch___024root___eval_settle(Vdual_switch___024root* v
 #ifdef VL_DEBUG
                 Vdual_switch___024root___dump_triggers__stl(vlSelf);
 #endif
-                VL_FATAL_MT("vsrc/pre_dual_switch/dual_switch.v", 1, "", "Settle region did not converge.");
+                VL_FATAL_MT("/home/tianyi/projects/ysyx-workbench/npc/vsrc/pre_dual_switch/dual_switch.v", 1, "", "Settle region did not converge.");
             }
             vlSelf->__VstlIterCount = ((IData)(1U) 
                                        + vlSelf->__VstlIterCount);
