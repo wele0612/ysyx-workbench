@@ -4,7 +4,7 @@
 # Execute this makefile from the object directory:
 #    make -f Vdual_switch.mk
 
-default: Vdual_switch__ALL.a
+default: Vdual_switch
 
 ### Constants...
 # Perl executable (from $PERL)
@@ -51,5 +51,14 @@ VM_USER_DIR = \
 include Vdual_switch_classes.mk
 # Include global rules
 include $(VERILATOR_ROOT)/include/verilated.mk
+
+### Executable rules... (from --exe)
+VPATH += $(VM_USER_DIR)
+
+
+### Link rules... (from --exe)
+Vdual_switch: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
+	$(LINK) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) $(LIBS) $(SC_LIBS) -o $@
+
 
 # Verilated -*- Makefile -*-
