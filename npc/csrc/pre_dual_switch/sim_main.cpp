@@ -1,7 +1,7 @@
 #include "Vdual_switch.h"
 #include "verilated_vcd_c.h"
 #include "verilated.h"
-#include <nvboard.h>
+#include "nvboard.h"
 #include <cstdlib>
 #include <cassert>
 int main(int argc, char** argv) {
@@ -9,6 +9,8 @@ int main(int argc, char** argv) {
       Verilated::traceEverOn(true);
       VerilatedVcdC* tfp= new VerilatedVcdC;
 	
+      
+      Vdual_switch* top = new Vdual_switch{contextp};
       int a=0,b=0;
       nvboard_bind_pin(&a,false,true,1,SW1);
       nvboard_bind_pin(&b,false,true,1,SW2);
@@ -17,7 +19,6 @@ int main(int argc, char** argv) {
       nvboard_init(); 
 
       contextp->commandArgs(argc, argv);
-      Vdual_switch* top = new Vdual_switch{contextp};
       
       top->trace(tfp,10);
 
