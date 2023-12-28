@@ -105,7 +105,7 @@ static int cmd_x(char *args){
           value8=(uint8_t)vaddr_read(addr+j,1);
           printf("%2x ",value8);
         }
-        valuew=(uint8_t)vaddr_read(addr,isa_wordlength);
+        valuew=vaddr_read(addr,isa_wordlength);
         printf(" %d",*((int32_t*)&valuew));
         printf("\n");
         addr+=isa_wordlength;
