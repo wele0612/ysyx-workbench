@@ -29,13 +29,13 @@ void isa_reg_display() {
   int i;
   int64_t value;
   bool success;
-  printf("PC = %lx",(uint64_t)cpu.pc);
+  printf("PC = \33[1;36m0x%lx\33[0m",(uint64_t)cpu.pc);
   for(i=0;i<sizeof(regs)/sizeof(regs[0]);i++){
     if(i%ISA_REG_DISPLAY_COLUMNS==0){
       printf("\n");
     }
     value=isa_reg_str2val(regs[i],&success);
-    printf("%s %ld 0x%lx  \t",regs[i],value,(uint64_t)value);
+    printf("\33[1;36m0x%s\33[0m %ld 0x%lx  \t",regs[i],value,(uint64_t)value);
   }
   printf("\n");
 }
