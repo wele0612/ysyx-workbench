@@ -17,6 +17,7 @@
 #include <cpu/cpu.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <utils.h>
 #include "sdb.h"
 
 static int is_batch_mode = false;
@@ -49,6 +50,7 @@ static int cmd_c(char *args) {
 
 
 static int cmd_q(char *args) {
+  set_nemu_state(NEMU_QUIT, 0, 0);
   return -1;
 }
 
