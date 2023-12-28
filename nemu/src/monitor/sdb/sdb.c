@@ -85,16 +85,24 @@ static int cmd_info(char *args){
   return 0;
 }
 
-#define CMD_X_MEMORYCELLS_PER_LINE_2POWER 2
 static int cmd_x(char *args){
-  int length,n=0;
-  uint64_t addr,p=-1;
+  int length,n=0,i;
+  word_t value;
+
+  //read n words each time(n=4 for 32bit ISA)
+  int isa_wordlength=sizeof(word_t);
+  uint64_t addr;
   if(args!=NULL){
     n=sscanf(args,"%d %lx",&length,&addr);
     if(n==2){
-      printf("Memory (%lx)+%d\n",addr,length);
-      p=addr&(p<<CMD_X_MEMORYCELLS_PER_LINE_2POWER);
-
+      printf("Memory (0x%lx)+%d\n",addr,length);
+      printf("---------------------\n");
+      for(i=0;i<length;i++){
+        value=vaddr_read((vaddr_t)addr,isa_wordlength);
+        printf("0x%lx | %ld 0x%lx \n",\
+          addr,(int64_t)value,(uint64_t)value);
+          addr+=isa_wordlength;
+      }
       return 0;
     }
   }
