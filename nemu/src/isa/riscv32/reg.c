@@ -36,6 +36,7 @@ void isa_reg_display() {
     value=isa_reg_str2val(regs[i],&success);
     printf("%s %ld 0x%lx  \t",regs[i],value,(uint64_t)value);
   }
+  printf("\n");
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
