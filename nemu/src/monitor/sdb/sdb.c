@@ -99,7 +99,7 @@ static int cmd_x(char *args){
       printf("---------------------\n");
       for(i=0;i<length;i++){
         value=vaddr_read((vaddr_t)addr,isa_wordlength);
-        printf("0x%lx | %ld 0x%lx \n",\
+        printf("0x%lx | %ld \t0x%lx \n",\
           addr,(int64_t)value,(uint64_t)value);
           addr+=isa_wordlength;
       }
