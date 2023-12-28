@@ -23,9 +23,31 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
+#define ISA_REG_DISPLAY_COLUMNS 2
+
 void isa_reg_display() {
+  int i;
+  int64_t value;
+  bool success;
+  printf("PC = %lx",(uint64_t)cpu.pc);
+  for(i=0;i<sizeof(regs)/sizeof(regs[0]);i++){
+    if(i%ISA_REG_DISPLAY_COLUMNS==0){
+      printf("\n");
+    }
+    value=isa_reg_str2val(regs[i],&success);
+    printf("%s %ld 0x%lx  \t",regs[i],value,(uint64_t)value);
+  }
+  printf("\n");
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
+  int i;
+  for(i=0;i<sizeof(regs)/sizeof(regs[0]);i++){
+    if(strcmp(s,regs[i])==0){
+      *success=true;
+      return cpu.gpr[i];
+    }
+  }
+  *success=false;
   return 0;
 }
