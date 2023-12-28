@@ -65,6 +65,7 @@ static int cmd_si(char *args){
     steps=1;
     printf("Invalid steps \"%s\". Using default steps=1\n", args);
   }
+  printf("Executing %lu steps.\n",steps);
   cpu_exec(steps);
   return 0;
 }
