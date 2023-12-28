@@ -98,11 +98,10 @@ static int cmd_x(char *args){
     if(n==2){
       printf(ANSI_FG_CYAN);
       printf("Memory (0x%lx)+%d\n",addr,length);
-      printf("---------------------\n");
       printf(ANSI_NONE);
 
       for(i=0;i<length;i++){
-        printf("0x%lx \t",addr);
+        printf("\33[1;34m 0x \33[0m%lx \t",addr);
         for(j=0;j<isa_wordlength;j++){
           value8=(uint8_t)vaddr_read(addr+j,1);
           printf("%2x ",value8);
