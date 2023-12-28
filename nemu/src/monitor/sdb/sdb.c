@@ -57,7 +57,11 @@ static int cmd_q(char *args) {
 
 static int cmd_si(char *args){
   uint64_t steps;
-  if(sscanf(args,"%lu",&steps)!=1){
+  int n=0;
+  if(args!=NULL){
+    n=sscanf(args,"%lu",&steps);
+  }
+  if(n!=1){
     steps=1;
     printf("Invalid steps \"%s\". Using default steps=1", args);
   }
