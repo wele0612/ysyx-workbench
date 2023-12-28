@@ -85,16 +85,20 @@ static int cmd_info(char *args){
   return 0;
 }
 
-#define CMD_X_MEMORYCELLS_PER_LINE (1U<<2)
+#define CMD_X_MEMORYCELLS_PER_LINE_2POWER 2
 static int cmd_x(char *args){
   int length,n=0;
-  int64_t addr;
+  uint64_t addr,p=-1;
   if(args!=NULL){
     n=sscanf(args,"%d %lx",&length,&addr);
     if(n==2){
-      printf("%d %lx\n",length,addr);
+      printf("Memory (%lx)+%d\n",addr,length);
+      p=addr&(p<<CMD_X_MEMORYCELLS_PER_LINE_2POWER);
+
+      return 0;
     }
   }
+  printf("Invalid arguments for command \'x\'.\n");
   return 0;
 }
 
