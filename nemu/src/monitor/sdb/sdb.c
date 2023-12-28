@@ -102,12 +102,13 @@ static int cmd_x(char *args){
       for(i=0;i<length;i++){
         printf("0x%lx \t",addr);
         for(j=0;j<isa_wordlength;j++){
-          value8=(uint8_t)vaddr_read(addr+i*isa_wordlength+j,1);
+          value8=(uint8_t)vaddr_read(addr+j,1);
           printf("%2x ",value8);
         }
-        valuew=(uint8_t)vaddr_read(addr+i*isa_wordlength,isa_wordlength);
+        valuew=(uint8_t)vaddr_read(addr,isa_wordlength);
         printf(" %d",*((int32_t*)&valuew));
         printf("\n");
+        addr+=isa_wordlength;
       }
 
       /*
