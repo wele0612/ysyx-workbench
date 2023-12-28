@@ -18,6 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <utils.h>
+//#include <stdio.h>
 #include "sdb.h"
 
 static int is_batch_mode = false;
@@ -48,10 +49,20 @@ static int cmd_c(char *args) {
   return 0;
 }
 
-
 static int cmd_q(char *args) {
+  //To fix the bug mentioned in PA1
   set_nemu_state(NEMU_QUIT, 0, 0);
   return -1;
+}
+
+static int cmd_si(char *args){
+  uint64_t steps;
+  if(sscanf(args,"%lu",&steps)!=1){
+    steps=1;
+    printf("Invalid steps \"%s\". Using default steps=1", args);
+  }
+  cpu_exec(steps);
+  return 0;
 }
 
 static int cmd_help(char *args);
@@ -63,8 +74,8 @@ static struct {
 } cmd_table [] = {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
-  { "qnemu", "Exit NEMU", cmd_q },
-
+  { "qnemu", "Exit NEMU", cmd_q },//changed to avoid conflict with gdb
+  { "si", "Singal-step execute", cmd_si}
   /* TODO: Add more commands */
 
 };
