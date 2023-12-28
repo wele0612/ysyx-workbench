@@ -96,7 +96,6 @@ static int cmd_x(char *args){
   if(args!=NULL){
     n=sscanf(args,"%d %lx",&length,&addr);
     if(n==2){
-      printf(ANSI_FG_CYAN);
       printf("Memory (0x%lx)+%d\n",addr,length);
       printf(ANSI_FG_YELLOW);
       printf("           +0 +1 +2 +3\n");
