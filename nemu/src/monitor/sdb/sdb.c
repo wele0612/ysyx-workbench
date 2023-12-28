@@ -98,6 +98,8 @@ static int cmd_x(char *args){
     if(n==2){
       printf(ANSI_FG_CYAN);
       printf("Memory (0x%lx)+%d\n",addr,length);
+      printf(ANSI_FG_BLUE);
+      printf("         +0 +1 +2 +3\n");
       printf(ANSI_NONE);
 
       for(i=0;i<length;i++){
