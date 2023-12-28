@@ -98,8 +98,8 @@ static int cmd_x(char *args){
     if(n==2){
       printf(ANSI_FG_CYAN);
       printf("Memory (0x%lx)+%d\n",addr,length);
-      printf(ANSI_FG_BLUE);
-      printf("         +0 +1 +2 +3\n");
+      printf(ANSI_FG_YELLOW);
+      printf("           +0 +1 +2 +3\n");
       printf(ANSI_NONE);
 
       for(i=0;i<length;i++){
@@ -113,15 +113,6 @@ static int cmd_x(char *args){
         printf("\n");
         addr+=isa_wordlength;
       }
-
-      /*
-      for(i=0;i<length;i++){
-        value=vaddr_read((vaddr_t)addr,isa_wordlength);
-        printf("0x%lx | %ld \t0x%lx \n",\
-          addr,(int64_t)value,(uint64_t)value);
-          addr+=isa_wordlength;
-      }
-      */
       return 0;
     }
   }
