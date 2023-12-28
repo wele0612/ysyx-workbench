@@ -96,8 +96,10 @@ static int cmd_x(char *args){
   if(args!=NULL){
     n=sscanf(args,"%d %lx",&length,&addr);
     if(n==2){
+      printf(ANSI_FG_CYAN);
       printf("Memory (0x%lx)+%d\n",addr,length);
       printf("---------------------\n");
+      printf(ANSI_NONE);
 
       for(i=0;i<length;i++){
         printf("0x%lx \t",addr);
