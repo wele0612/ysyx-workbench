@@ -86,8 +86,9 @@ static int cmd_info(char *args){
 }
 
 static int cmd_x(char *args){
-  int length,n=0,i;
-  word_t value;
+  int length,n=0,i,j;
+  word_t valuew;
+  uint8_t value8;
 
   //read n words each time(n=4 for 32bit ISA)
   int isa_wordlength=sizeof(word_t);
@@ -97,12 +98,26 @@ static int cmd_x(char *args){
     if(n==2){
       printf("Memory (0x%lx)+%d\n",addr,length);
       printf("---------------------\n");
+
+      for(i=0;i<length;i++){
+        printf("0x%lx \t",addr);
+        for(j=0;j<isa_wordlength;j++){
+          value8=(uint8_t)vaddr_read(addr+i*isa_wordlength+j,1);
+          printf("%2x ",value8);
+        }
+        valuew=(uint8_t)vaddr_read(addr+i*isa_wordlength,isa_wordlength);
+        printf(" %d",*((int32_t*)&valuew));
+        printf("\n");
+      }
+
+      /*
       for(i=0;i<length;i++){
         value=vaddr_read((vaddr_t)addr,isa_wordlength);
         printf("0x%lx | %ld \t0x%lx \n",\
           addr,(int64_t)value,(uint64_t)value);
           addr+=isa_wordlength;
       }
+      */
       return 0;
     }
   }
