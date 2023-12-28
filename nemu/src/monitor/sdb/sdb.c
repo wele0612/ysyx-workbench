@@ -101,7 +101,7 @@ static int cmd_x(char *args){
       printf(ANSI_NONE);
 
       for(i=0;i<length;i++){
-        printf("\33[1;36m0x%lx\33[0m \t",addr);
+        printf("\33[1;36m0x%lx\33[0m ",addr);
         for(j=0;j<isa_wordlength;j++){
           value8=(uint8_t)vaddr_read(addr+j,1);
           printf("%2x ",value8);
