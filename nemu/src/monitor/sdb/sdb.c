@@ -70,6 +70,38 @@ static int cmd_si(char *args){
   return 0;
 }
 
+static int cmd_info(char *args){
+  if(args!=NULL){
+    if(strcmp(args,"r")==0){
+      isa_reg_display();
+      return 0;
+    }
+    if(strcmp(args,"w")==0){
+      return 0;
+    }
+  }
+  printf("Invalid parameters. Use \'info r\' or \'info w\'.\n");
+  return 0;
+}
+
+static int cmd_x(char *args){
+  return 0;
+}
+
+static int cmd_p(char *args){
+  return 0;
+}
+
+static int cmd_w(char *args){
+  return 0;
+}
+
+static int cmd_d(char *args){
+  return 0;
+}
+
+
+
 static int cmd_help(char *args);
 
 static struct {
@@ -80,7 +112,12 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "qnemu", "Exit NEMU", cmd_q },//changed to avoid conflict with gdb
-  { "si", "Singal-step execute", cmd_si}
+  { "si", "Singal-step execute", cmd_si},
+  { "info", "info r -> print regsisters, info w -> print watch point infomation", cmd_info},
+  { "x", "Scan memory. Format: x N EXPR", cmd_x},
+  { "p", "Display value of Given EXPR. Format: p EXPR", cmd_p},
+  { "w", "Set watchpoint", cmd_w},
+  { "d", "Delete watchpoint", cmd_d}
   /* TODO: Add more commands */
 
 };
