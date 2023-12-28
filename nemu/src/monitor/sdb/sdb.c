@@ -17,8 +17,6 @@
 #include <cpu/cpu.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <utils.h>
-//#include <stdio.h>
 #include "sdb.h"
 
 static int is_batch_mode = false;
@@ -49,58 +47,10 @@ static int cmd_c(char *args) {
   return 0;
 }
 
+
 static int cmd_q(char *args) {
-  //To fix the bug mentioned in PA1
-  set_nemu_state(NEMU_QUIT, 0, 0);
   return -1;
 }
-
-static int cmd_si(char *args){
-  uint64_t steps;
-  int n=0;
-  if(args!=NULL){
-    n=sscanf(args,"%lu",&steps);
-  }
-  if(n!=1){
-    steps=1;
-    printf("Invalid steps \"%s\". Using default steps=1\n", args);
-  }
-  printf("Executing %lu steps.\n",steps);
-  cpu_exec(steps);
-  return 0;
-}
-
-static int cmd_info(char *args){
-  if(args!=NULL){
-    if(strcmp(args,"r")==0){
-      isa_reg_display();
-      return 0;
-    }
-    if(strcmp(args,"w")==0){
-      return 0;
-    }
-  }
-  printf("Invalid parameters. Use \'info r\' or \'info w\'.\n");
-  return 0;
-}
-
-static int cmd_x(char *args){
-  return 0;
-}
-
-static int cmd_p(char *args){
-  return 0;
-}
-
-static int cmd_w(char *args){
-  return 0;
-}
-
-static int cmd_d(char *args){
-  return 0;
-}
-
-
 
 static int cmd_help(char *args);
 
@@ -111,13 +61,8 @@ static struct {
 } cmd_table [] = {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
-  { "qnemu", "Exit NEMU", cmd_q },//changed to avoid conflict with gdb
-  { "si", "Singal-step execute", cmd_si},
-  { "info", "info r -> print regsisters, info w -> print watch point infomation", cmd_info},
-  { "x", "Scan memory. Format: x N EXPR", cmd_x},
-  { "p", "Display value of Given EXPR. Format: p EXPR", cmd_p},
-  { "w", "Set watchpoint", cmd_w},
-  { "d", "Delete watchpoint", cmd_d}
+  { "q", "Exit NEMU", cmd_q },
+
   /* TODO: Add more commands */
 
 };
