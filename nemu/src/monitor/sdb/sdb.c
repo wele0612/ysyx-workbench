@@ -20,6 +20,7 @@
 #include <utils.h>
 //#include <stdio.h>
 #include "sdb.h"
+#include <memory/vaddr.h>
 
 static int is_batch_mode = false;
 
@@ -84,7 +85,16 @@ static int cmd_info(char *args){
   return 0;
 }
 
+#define CMD_X_MEMORYCELLS_PER_LINE (1U<<2)
 static int cmd_x(char *args){
+  int length,n=0;
+  int64_t addr;
+  if(args!=NULL){
+    n=sscanf(args,"%d %lx",&length,&addr);
+    if(n==2){
+      printf("%d %lx\n",length,addr);
+    }
+  }
   return 0;
 }
 
