@@ -29,7 +29,7 @@ void isa_reg_display() {
   int i;
   int64_t value;
   bool success;
-  printf("PC = \33[1;36m0x%lx\33[0m",(uint64_t)cpu.pc);
+  printf("PC = \33[1;36m%lx\33[0m",(uint64_t)cpu.pc);
   for(i=0;i<sizeof(regs)/sizeof(regs[0]);i++){
     if(i%ISA_REG_DISPLAY_COLUMNS==0){
       printf("\n");
