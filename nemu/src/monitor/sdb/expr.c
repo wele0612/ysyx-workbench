@@ -214,7 +214,7 @@ static bool make_token(char *e,int *length) {
   tokens[nr_token].type=TK_END;
   tokens[nr_token].str[0]='\0';
 
-  for(i=0;i<EXPR_MAX_TOKENS;i++){
+  for(i=0;i<nr_token;i++){
     printf("%d -> (%d)%s\n",i,tokens[i].priority,tokens[i].str);
   }
 
@@ -278,6 +278,10 @@ Token* parse_expr(char *e){
         break;
 
       case(TK_END):
+        if(buffer_sp!=0){
+          printf("Error: missing extra \'(\' in expression.\n");
+          return NULL;
+        }
         break;
 
       default:
