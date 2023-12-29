@@ -145,7 +145,7 @@ int typeof_token(Token* token){
 }
 
 
-#define EXPR_MAX_TOKENS 32
+#define EXPR_MAX_TOKENS 128
 
 static Token tokens[EXPR_MAX_TOKENS] __attribute__((used)) = {};
 static int stackbuffer[EXPR_MAX_TOKENS] __attribute__((used)) = {};
@@ -476,6 +476,5 @@ word_t expr(char *e, bool *success) {
     printf("Expression evaluation failed.\n");
   }
 
-  //*success=true;
   return ans;
 }

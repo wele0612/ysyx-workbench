@@ -31,8 +31,61 @@ static char *code_format =
 "  return 0; "
 "}";
 
+const char oprands[4]={'+','-','*','/'};
+
+int random_expr(int max_depth,char* buf){
+  int use_struct=rand()%2;
+  int length,i;
+  length=0;
+
+  if(use_struct){
+    buf[0]='(';
+    buf++;
+    length++;
+  }
+
+  i=2;//rand()%3;
+  if(max_depth==0){
+    i=0;
+  }
+
+  switch(i){
+    case(0):
+      buf[0]='1'+rand()%8;
+      length++;
+      buf++;
+      break;
+    case(1):
+      length+=random_expr(max_depth-1,buf);
+      buf+=length;
+      break;
+    case(2):
+      i=random_expr(max_depth-1,buf);
+      buf+=i;
+      length+=i;
+
+      buf[0]=oprands[rand()%4];
+      buf+=1;
+      length++;
+
+      i=random_expr(max_depth-1,buf);
+      buf+=i;
+      length+=i;
+
+      break;
+  }
+
+  if(use_struct){
+    buf[0]=')';
+    length+=1;
+  }
+  return length;
+}
+
 static void gen_rand_expr() {
-  buf[0] = '\0';
+  int length=random_expr(4,buf);
+  buf[length]='\0';
+  return;
 }
 
 int main(int argc, char *argv[]) {
