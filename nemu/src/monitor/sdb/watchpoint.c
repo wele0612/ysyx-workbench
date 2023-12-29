@@ -47,7 +47,7 @@ void wp_pool_add(int NO,char* e){
 
   for(i=0;i<expr.length;i++){
     printf("%s ",expr.tokens[i].str);
-    return;
+    //return;
   }
   printf("\n");
 
