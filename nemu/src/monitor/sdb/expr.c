@@ -229,13 +229,14 @@ static bool make_token(char *e,int *length) {
             tokens[nr_token].type=rules[i].token_type;
             strncpy(tokens[nr_token].str,substr_start,substr_len);
 
+            /*
             if(nr_token>0){
               if(is_binary_operator&&\
                 typeof_token(&(tokens[nr_token]))==TK_TYPE_VALUE){
                 printf("Error: missing operater for \"%s\"\n",tokens[nr_token].str);
                 return false;
               }
-            }
+            }*/
 
             nr_token++;
         }
@@ -283,7 +284,7 @@ Suffix_expr parse_expr(char *e){
 
   for(i=1;i<length;i++){
     if(typeof_token(&tokens[i])==typeof_token(&tokens[i-1])){
-      printf("Error: syntex error at \"%s\"\n",tokens[i].str);
+      printf("Error: syntex error near \"%s\"\n",tokens[i].str);
     }
   }
 
