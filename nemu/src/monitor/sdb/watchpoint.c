@@ -39,6 +39,7 @@ void wp_pool_add(int NO,char* e){
   int i;
   bool success;
   expr=parse_expr(e);
+  printf("Expression: %s",e);
   if(expr.length==-1){
     printf("Error: Invalid expression.\n");
     return;
