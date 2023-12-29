@@ -120,6 +120,16 @@ static int cmd_x(char *args){
 }
 
 static int cmd_p(char *args){
+  word_t value;
+  bool success;
+  if(args!=NULL){
+    value=expr(args,&success);
+    if(success){
+      printf("%ld\n",(int64_t)value);
+    }else{
+      Log("Invalid expression.");
+    }
+  }
   return 0;
 }
 
@@ -146,7 +156,7 @@ static struct {
   { "si", "Singal-step execute", cmd_si},
   { "info", "info r -> print regsisters, info w -> print watch point infomation", cmd_info},
   { "x", "Scan memory. Format: x N EXPR", cmd_x},
-  { "p", "Display value of Given EXPR. Format: p EXPR", cmd_p},
+  { "p", "Print values. Expressions supported. Format: p EXPR", cmd_p},
   { "w", "Set watchpoint", cmd_w},
   { "d", "Delete watchpoint", cmd_d}
   /* TODO: Add more commands */
