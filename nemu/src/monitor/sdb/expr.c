@@ -48,8 +48,8 @@ static struct rule {
   
   {"\\(",TK_LEFT_B},
   {"\\)",TK_RIGHT_B},
-  /*
-  {"-",'-'},
+  
+  {"-",'-'},/*
   {"*",'*'},//may need to fix precedence levels
   {"/",'/'},
   {"0x[0-9a-f]+",TK_NUM_HEX},
@@ -136,6 +136,6 @@ word_t expr(char *e, bool *success) {
 
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-
+  *success=true;
   return 0;
 }
