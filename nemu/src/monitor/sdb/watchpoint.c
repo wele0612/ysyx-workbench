@@ -115,7 +115,7 @@ void wp_pool_display(WP *pool){
   if(pool==NULL){
     return;
   }
-  printf("NO.%d \t%s\n",pool->NO,pool->description);
+  printf("NO.%d \t%s\33[1;36m(%ld)\33[0m\n",pool->NO,pool->description,(int64_t)pool->prev_value);
   wp_pool_display(pool->next);
 }
 
