@@ -124,6 +124,7 @@ static bool make_token(char *e,int *length) {
   regmatch_t pmatch;
 
   temp=malloc(strlen(e)+3);
+  //add a pair of parentheses to the outmost of expr.
   assert(temp);
   temp[0]='(';
   temp[1]='\0';
@@ -221,18 +222,16 @@ static bool make_token(char *e,int *length) {
   return true;
 }
 
-Token* parse_expr(char *e, bool *success){
+Token* parse_expr(char *e){
   int length;
   int i,j;
   Token* suffix_expr;
   if (!make_token(e,&length)) {
-    *success = false;
     return NULL;
   }
   
   suffix_expr=(Token*)malloc(sizeof(Token)*length);
   if(suffix_expr==NULL){
-    *success = false;
     return NULL;
   }
 
@@ -256,6 +255,28 @@ Token* parse_expr(char *e, bool *success){
         j++;
         break;
 
+      case(TK_LEFT_B):
+        stackbuffer[buffer_sp]=i;
+        buffer_sp++;
+        break;
+      
+      case(TK_RIGHT_B):
+        while(1){
+          if(buffer_sp<=0){
+            printf("Error: extra \')\' in expression.\n");
+            return NULL;
+          }
+
+          buffer_sp--;
+          if(tokens[stackbuffer[buffer_sp]].type==TK_LEFT_B){
+            break;
+          }else{
+            suffix_expr[j]=tokens[stackbuffer[buffer_sp]];
+            j++;
+          }
+        }
+        break;
+
       case(TK_END):
         break;
 
@@ -270,22 +291,15 @@ Token* parse_expr(char *e, bool *success){
     printf("%s %ld\n",suffix_expr[i].str,suffix_expr[i].num_value);
   }
 
-  *success=true;
   return suffix_expr;
 }
 
 word_t expr(char *e, bool *success) {
-
-  parse_expr(e,success);
-  
-  /*
-  if (!make_token(e)) {
-    *success = false;
+  if(parse_expr(e)==NULL){
+    *success=false;
     return 0;
   }
-  */
 
-  //TODO();
-
+  *success=true;
   return 0;
 }
