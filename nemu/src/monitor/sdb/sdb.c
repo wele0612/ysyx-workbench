@@ -123,7 +123,8 @@ static int cmd_p(char *args){
   word_t value;
   bool success;
   if(args!=NULL){
-    value=expr(args,&success);
+    value=expr(args,&success);    
+
     if(success){
       printf("%ld\n",(int64_t)value);
     }else{

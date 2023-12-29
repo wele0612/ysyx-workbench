@@ -252,20 +252,25 @@ Token* parse_expr(char *e, bool *success){
     }
   }
 
+  for(i=0;i<j;i++){
+    printf("%s %ld\n",suffix_expr[i].str,suffix_expr[i].num_value);
+  }
+
   *success=true;
-  return 0;
+  return suffix_expr;
 }
 
 word_t expr(char *e, bool *success) {
+  
   /*
   if (!make_token(e)) {
     *success = false;
     return 0;
   }
+  */
 
   //TODO();
   *success=true;
+
   return 0;
-  */
- return 0;
 }
