@@ -20,6 +20,8 @@
  */
 #include <regex.h>
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #define TKPRIOR_OPRAND 255
 enum {
@@ -110,9 +112,11 @@ typedef struct token {
 #define EXPR_MAX_TOKENS 32
 
 static Token tokens[EXPR_MAX_TOKENS] __attribute__((used)) = {};
+static int stackbuffer[EXPR_MAX_TOKENS] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
+static int buffer_sp __attribute__((used))  = 0;
 
-static bool make_token(char *e) {
+static bool make_token(char *e,int *length) {
   int position = 0;
   int i;
   bool is_binary_operator ;
@@ -204,19 +208,64 @@ static bool make_token(char *e) {
     printf("%d -> (%d)%s\n",i,tokens[i].priority,tokens[i].str);
   }
 
+  *length=nr_token;
   return true;
 }
 
+Token* parse_expr(char *e, bool *success){
+  int length;
+  int i,j;
+  Token* suffix_expr;
+  if (!make_token(e,&length)) {
+    *success = false;
+    return NULL;
+  }
+  
+  suffix_expr=(Token*)malloc(sizeof(Token)*length);
+  if(suffix_expr==NULL){
+    *success = false;
+    return NULL;
+  }
 
+  buffer_sp=0;
+  i=0;
+  j=0;
+  while(i<length){
+    switch(tokens[i].type){
+
+      case(TK_NUM_DEC):
+        sscanf(tokens[i].str,"%ld",&tokens[i].num_value);
+        suffix_expr[j]=tokens[i];
+        j++;
+        break;
+        /*stackbuffer[buffer_sp]=i;
+        buffer_sp++;*/
+      
+      case(TK_NUM_HEX):
+        sscanf(tokens[i].str+2,"%lx",&tokens[i].num_value);
+        suffix_expr[j]=tokens[i];
+        j++;
+        break;
+      default:
+        assert(0);
+        break;
+    }
+  }
+
+  *success=true;
+  return 0;
+}
 
 word_t expr(char *e, bool *success) {
+  /*
   if (!make_token(e)) {
     *success = false;
     return 0;
   }
 
-  /* TODO: Insert codes to evaluate the expression. */
   //TODO();
   *success=true;
   return 0;
+  */
+ return 0;
 }
