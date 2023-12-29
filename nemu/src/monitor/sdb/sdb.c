@@ -126,7 +126,7 @@ static int cmd_p(char *args){
     value=expr(args,&success);    
 
     if(success){
-      printf("PC 0x%x=>%ld\n",(uint32_t)cpu.pc,(int64_t)value);
+      printf("PC \33[1;36m0x%lx\33[0m => %ld\n",(uint64_t)cpu.pc,(int64_t)value);
     }else{
       Log("Invalid expression.");
     }
