@@ -103,7 +103,8 @@ void init_regex() {
 typedef struct token {
   int type;
   char str[32];
-  int priority;
+  int16_t priority;
+  int64_t num_value;
 } Token;
 
 #define EXPR_MAX_TOKENS 32
@@ -152,14 +153,14 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-          case(TK_NOTYPE): continue;
-          default: 
-            tokens[nr_token].priority=rules[i].priority;
-            tokens[nr_token].type=rules[i].token_type;
-            strncpy(tokens[nr_token].str,substr_start,substr_len);
-            nr_token++;
+          case(TK_NOTYPE): break;
+          default: break;
+            
         }
-
+        tokens[nr_token].priority=rules[i].priority;
+        tokens[nr_token].type=rules[i].token_type;
+        strncpy(tokens[nr_token].str,substr_start,substr_len);
+        nr_token++;
         break;
       }
     }
@@ -178,6 +179,7 @@ static bool make_token(char *e) {
 
   return true;
 }
+
 
 
 word_t expr(char *e, bool *success) {
