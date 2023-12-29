@@ -144,7 +144,7 @@ static bool make_token(char *e) {
           }
         }
 
-        if(is_binary_operator){
+        if(!is_binary_operator){
           printf("%.*s may be special\n",substr_len, substr_start);
         }
         
