@@ -45,9 +45,10 @@ static struct rule {
   {"\\+", '+'},         // plus
   {"==", TK_EQ},        // equal
   //------------added in PA1--------
-  /*
+  
   {"\\(",TK_LEFT_B},
   {"\\)",TK_RIGHT_B},
+  /*
   {"-",'-'},
   {"*",'*'},//may need to fix precedence levels
   {"/",'/'},
