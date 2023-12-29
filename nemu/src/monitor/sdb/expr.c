@@ -120,17 +120,7 @@ static bool make_token(char *e,int *length) {
   int position = 0;
   int i;
   bool is_binary_operator;
-  char *temp;
   regmatch_t pmatch;
-
-  temp=malloc(strlen(e)+3);
-  //add a pair of parentheses to the outmost of expr.
-  assert(temp);
-  temp[0]='(';
-  temp[1]='\0';
-  strcat(temp,e);
-  strcat(temp,")");
-  e=temp;
 
   nr_token = 0;
 
@@ -279,7 +269,7 @@ Token* parse_expr(char *e){
 
       case(TK_END):
         if(buffer_sp!=0){
-          printf("Error: missing extra \'(\' in expression.\n");
+          printf("Error: missing \'(\' in expression.\n");
           return NULL;
         }
         break;
