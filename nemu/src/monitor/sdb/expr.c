@@ -377,7 +377,7 @@ word_t eval_expr(Suffix_expr expr,bool *success){
         *success=false;
         return 0;
       default:
-        assert(0);
+        TODO();
     }
   }
 
