@@ -343,8 +343,8 @@ int typeof_token(Token* token){
 }
 
 word_t eval_expr(Suffix_expr expr,bool *success){
-  word_t value1,value2;
-  word_t stack[EXPR_MAX_TOKENS];
+  int64_t value1,value2;
+  int64_t stack[EXPR_MAX_TOKENS];
   int i,sp;
   /*Update regsisters*/
   sp=0;
@@ -356,7 +356,7 @@ word_t eval_expr(Suffix_expr expr,bool *success){
   for(i=0;i<expr.length;i++){
     switch(typeof_token(&(expr.tokens[i]))){
       case(TK_TYPE_VALUE):
-        stack[sp]=(word_t)expr.tokens[i].num_value;
+        stack[sp]=(int64_t)expr.tokens[i].num_value;
         sp++;
         break;
       case(TK_TYPE_SINGLE):
@@ -376,6 +376,8 @@ word_t eval_expr(Suffix_expr expr,bool *success){
         printf("Error: missing oprands in expression.\n");
         *success=false;
         return 0;
+      default:
+        assert(0);
     }
   }
 
@@ -384,7 +386,7 @@ word_t eval_expr(Suffix_expr expr,bool *success){
     *success=false;
   }
 
-  return stack[0];
+  return (word_t)stack[0];
 }
 
 word_t expr(char *e, bool *success) {
