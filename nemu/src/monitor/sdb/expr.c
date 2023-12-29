@@ -351,6 +351,8 @@ word_t eval_expr(Suffix_expr expr,bool *success){
   value2=0;
   i=value2;
 
+  *success=true;
+
   for(i=0;i<expr.length;i++){
     switch(typeof_token(&(expr.tokens[i]))){
       case(TK_TYPE_VALUE):
@@ -372,14 +374,14 @@ word_t eval_expr(Suffix_expr expr,bool *success){
           continue;
         }
         printf("Error: missing oprands in expression.\n");
-        success=false;
+        *success=false;
         return 0;
     }
   }
 
   if(sp!=1){
     printf("Error: too much oprands in expression.\n");
-    success=false;
+    *success=false;
   }
 
   return stack[0];
@@ -400,9 +402,9 @@ word_t expr(char *e, bool *success) {
   printf("\n");
 
   ans=eval_expr(expr,success);
-  printf("%d",ans);
+  printf("%d\n",ans);
 
-  if(!success){
+  if(!*success){
     printf("Expression evaluation failed.\n");
   }
 
