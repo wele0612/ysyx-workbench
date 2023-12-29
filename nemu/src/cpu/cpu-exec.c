@@ -34,7 +34,7 @@ void device_update();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
 #ifdef CONFIG_WATCHPOINT
-  if(wp_expr_changed()){
+  if(wp_expr_changed()&&nemu_state.state==NEMU_RUNNING){
     nemu_state.state=NEMU_STOP;
     printf("Watchpoing triggered.\n");
   }
