@@ -285,6 +285,7 @@ Suffix_expr parse_expr(char *e){
   for(i=1;i<length;i++){
     if(typeof_token(&tokens[i])==typeof_token(&tokens[i-1])){
       printf("Error: syntex error near \"%s\"\n",tokens[i].str);
+      return ans;
     }
   }
 
