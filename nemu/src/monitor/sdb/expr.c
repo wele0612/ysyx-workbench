@@ -232,7 +232,7 @@ static bool make_token(char *e,int *length) {
             if(nr_token>0){
               if(is_binary_operator&&\
                 typeof_token(&(tokens[nr_token]))==TK_TYPE_VALUE){
-                printf("Error: missing operater near \"%5s\"",e+position);
+                printf("Error: missing operater for \"%s\"\n",tokens[nr_token].str);
                 return false;
               }
             }
