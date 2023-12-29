@@ -250,6 +250,7 @@ Token* parse_expr(char *e, bool *success){
         assert(0);
         break;
     }
+    i++;
   }
 
   for(i=0;i<j;i++){
