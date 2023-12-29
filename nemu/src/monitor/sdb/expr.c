@@ -173,6 +173,7 @@ static bool make_token(char *e,int *length) {
               tokens[nr_token].type=TK_NEG;
             }
             strncpy(tokens[nr_token].str,substr_start,substr_len);
+            tokens[nr_token].str[substr_len]='\0';
             nr_token++;
             break;
 
@@ -185,6 +186,7 @@ static bool make_token(char *e,int *length) {
               tokens[nr_token].type=TK_PTR_DEREF;
             }
             strncpy(tokens[nr_token].str,substr_start,substr_len);
+            tokens[nr_token].str[substr_len]='\0';
             nr_token++;
             break;
 
@@ -195,9 +197,9 @@ static bool make_token(char *e,int *length) {
             printf("%d\n",substr_len);
 
             strncpy(tokens[nr_token].str,substr_start,substr_len);
+            tokens[nr_token].str[substr_len]='\0';
             nr_token++;
         }
-        tokens[nr_token].str[substr_len]='\0';
         break;
       }
     };
