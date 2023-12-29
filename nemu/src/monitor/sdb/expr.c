@@ -198,10 +198,11 @@ static bool make_token(char *e,int *length) {
   }
   tokens[nr_token].type=TK_END;
   tokens[nr_token].str[0]='\0';
-
+/*
   for(i=0;i<nr_token;i++){
     printf("%d -> (%d)%s\n",i,tokens[i].priority,tokens[i].str);
   }
+  */
 
   *length=nr_token+1;
   return true;
@@ -300,6 +301,10 @@ Token* parse_expr(char *e){
     i++;
   }
 
+  for(i=0;i<j;i++){
+    printf("%s",suffix_expr[i].str);
+  }
+  printf("\n");
   for(i=0;i<j;i++){
     printf("%s %ld\n",suffix_expr[i].str,suffix_expr[i].num_value);
   }
