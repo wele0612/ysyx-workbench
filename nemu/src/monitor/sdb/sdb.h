@@ -17,6 +17,8 @@
 #define __SDB_H__
 
 #define TOKEN_STR_LENGTH 32
+#define DESCRIPTION_LENGTH 32
+
 
 #include <common.h>
 
@@ -32,7 +34,23 @@ typedef struct suffix_expression{
   Token* tokens;
 } Suffix_expr;
 
+typedef struct watchpoint {
+  int NO;
+  word_t prev_value;
+  char description[DESCRIPTION_LENGTH];
+  Suffix_expr expr;
+  struct watchpoint *next;
+
+  /* TODO: Add more members if necessary */
+
+} WP;
+
 word_t expr(char *e, bool *success);
 word_t eval_expr(Suffix_expr expr,bool *success);
+Suffix_expr parse_expr(char *e);
+
+WP* wp_pool_remove(int NO,WP *pool);
+void wp_pool_display_head();
+void wp_pool_add(int NO,char* e);
 
 #endif

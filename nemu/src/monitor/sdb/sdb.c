@@ -78,6 +78,7 @@ static int cmd_info(char *args){
       return 0;
     }
     if(strcmp(args,"w")==0){
+      wp_pool_display_head();
       return 0;
     }
   }
@@ -147,6 +148,18 @@ static int cmd_p(char *args){
 }
 
 static int cmd_w(char *args){
+  int NO,i,j;
+  char *e;
+  int n=sscanf(args,"%d",&NO);
+  if(n!=1){
+    return 0;
+  }
+    j=NO;
+    for(i=0;j>0;i++){
+      j/=10;
+    }
+    e=args+i;
+  wp_pool_add(NO,e);
   return 0;
 }
 
