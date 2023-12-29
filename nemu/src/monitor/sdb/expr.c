@@ -102,9 +102,11 @@ void init_regex() {
   }
 }
 
+#define TOKEN_STR_LENGTH 32
+
 typedef struct token {
   int type;
-  char str[32];
+  char str[TOKEN_STR_LENGTH];
   int16_t priority;
   int64_t num_value;
 } Token;
@@ -142,11 +144,12 @@ static bool make_token(char *e,int *length) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
-        
+        /*
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
-        
+        */
         position += substr_len;
+        assert(TOKEN_STR_LENGTH>=substr_len);
 
         is_binary_operator=false;
         //Non-binary version of '-' and '*' are different, etc.
@@ -193,9 +196,6 @@ static bool make_token(char *e,int *length) {
           default: 
             tokens[nr_token].priority=rules[i].priority;
             tokens[nr_token].type=rules[i].token_type;
-
-            printf("%d\n",substr_len);
-
             strncpy(tokens[nr_token].str,substr_start,substr_len);
             tokens[nr_token].str[substr_len]='\0';
             nr_token++;
