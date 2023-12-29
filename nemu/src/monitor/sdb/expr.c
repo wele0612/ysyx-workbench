@@ -118,7 +118,7 @@ static bool make_token(char *e) {
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
-    if(position>=EXPR_MAX_TOKENS){
+    if(nr_token>=EXPR_MAX_TOKENS){
       printf("Error: expression too long.\n");
       return false;
     }
@@ -151,9 +151,10 @@ static bool make_token(char *e) {
         switch (rules[i].token_type) {
           case(TK_NOTYPE): continue;
           default: 
-            tokens[position].priority=rules[i].priority;
-            tokens[position].type=rules[i].token_type;
-            strncpy(tokens[position].str,substr_start,substr_len);
+            tokens[nr_token].priority=rules[i].priority;
+            tokens[nr_token].type=rules[i].token_type;
+            strncpy(tokens[nr_token].str,substr_start,substr_len);
+            nr_token++;
         }
 
         break;
@@ -167,7 +168,7 @@ static bool make_token(char *e) {
   }
 
   for(i=0;i<EXPR_MAX_TOKENS;i++){
-    printf("%s\n",tokens[i].str);
+    printf("%d -> %s\n",i,tokens[i].str);
   }
 
   return true;
