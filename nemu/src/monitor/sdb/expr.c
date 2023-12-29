@@ -309,13 +309,6 @@ Suffix_expr parse_expr(char *e){
     i++;
   }
 
-  for(i=0;i<j;i++){
-    printf("%s",suffix_expr[i].str);
-  }
-  printf("\n");
-  for(i=0;i<j;i++){
-    printf("%s %ld\n",suffix_expr[i].str,suffix_expr[i].num_value);
-  }
   ans.tokens=suffix_expr;
   ans.length=j;
   return ans;
