@@ -87,12 +87,14 @@ void wp_pool_add(int NO,char* e){
 }
 
 WP* wp_pool_remove(int NO,WP *pool){
+  WP *ans;
   if(pool==NULL){
     return NULL;
   }
   if(pool->NO==NO){
+    ans=pool->next;
     free(pool);
-    return pool->next;
+    return ans;
   }
   pool->next=wp_pool_remove(NO,pool->next);
   return pool;
