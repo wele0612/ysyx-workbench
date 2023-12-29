@@ -24,6 +24,8 @@
 #define TKPRIOR_OPRAND 255
 enum {
   TK_NOTYPE, 
+  TK_END,
+
   TK_EQ,
 
   TK_PLUS,
@@ -42,13 +44,14 @@ enum {
   /* TODO: Add more token types */
 
 };
-
+/*
 enum {
   EXPR_TERMINATE,
   EXPR_CONST,
   EXPR_REG,
   EXPR_OPERATOR
 };
+*/
 
 static struct rule {
   const char *regex;
@@ -103,7 +106,7 @@ typedef struct token {
   int priority;
 } Token;
 
-#define EXPR_MAX_TOKENS 8
+#define EXPR_MAX_TOKENS 32
 
 static Token tokens[EXPR_MAX_TOKENS] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
@@ -118,7 +121,7 @@ static bool make_token(char *e) {
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
-    if(nr_token>=EXPR_MAX_TOKENS){
+    if(nr_token>=EXPR_MAX_TOKENS-1){
       printf("Error: expression too long.\n");
       return false;
     }
@@ -140,7 +143,7 @@ static bool make_token(char *e) {
         }
 
         if(is_binary_operator){
-          printf("%.*s may be special",substr_len, substr_start);
+          printf("%.*s may be special\n",substr_len, substr_start);
         }
 
         /* TODO: Now a new token is recognized with rules[i]. Add codes
@@ -166,6 +169,8 @@ static bool make_token(char *e) {
       return false;
     }
   }
+  tokens[nr_token+1].type=TK_END;
+  tokens[nr_token+1].str[0]='\0';
 
   for(i=0;i<EXPR_MAX_TOKENS;i++){
     printf("%d -> %s\n",i,tokens[i].str);
