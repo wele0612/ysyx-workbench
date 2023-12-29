@@ -140,9 +140,10 @@ static bool make_token(char *e,int *length) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
 
+        /*
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
-
+        */
         position += substr_len;
 
         is_binary_operator=false;
@@ -314,15 +315,80 @@ Suffix_expr parse_expr(char *e){
   return ans;
 }
 
-word_t eval_expr(Token *suffix_expr,bool *success){
-  //Token oprand1,oprand2;
+enum{
+  TK_TYPE_VALUE,
+  TK_TYPE_SINGLE,
+  TK_TYPE_BINARY,
+  TK_TYPE_STRUCT
+};
 
-  return 0;
+int typeof_token(Token* token){
+  switch(token->type){
+    case(TK_NUM_DEC):
+    case(TK_NUM_HEX):
+      return TK_TYPE_VALUE;
+
+    case(TK_NEG):
+    case(TK_PTR_DEREF):
+      return TK_TYPE_SINGLE;
+    
+    case(TK_END):
+    case(TK_LEFT_B):
+    case(TK_RIGHT_B):
+      return TK_TYPE_STRUCT;
+    
+    default:
+      return TK_TYPE_BINARY;
+  }
+}
+
+word_t eval_expr(Suffix_expr expr,bool *success){
+  word_t value1,value2;
+  word_t stack[EXPR_MAX_TOKENS];
+  int i,sp;
+  /*Update regsisters*/
+  sp=0;
+  value2=0;
+  i=value2;
+
+  for(i=0;i<expr.length;i++){
+    switch(typeof_token(&(expr.tokens[i]))){
+      case(TK_TYPE_VALUE):
+        stack[sp]=(word_t)expr.tokens[i].num_value;
+        sp++;
+        break;
+      case(TK_TYPE_SINGLE):
+        if(sp>0){
+          value1=stack[sp-1];
+          
+          switch(expr.tokens[i].type){
+            case(TK_NEG):
+              stack[sp-1]=-value1;
+              break;
+            case(TK_PTR_DEREF):
+              TODO();
+              break;
+          }
+          continue;
+        }
+        printf("Error: missing oprands in expression.\n");
+        success=false;
+        return 0;
+    }
+  }
+
+  if(sp!=1){
+    printf("Error: too much oprands in expression.\n");
+    success=false;
+  }
+
+  return stack[0];
 }
 
 word_t expr(char *e, bool *success) {
   Suffix_expr expr=parse_expr(e);
   int i;
+  word_t ans;
   if(expr.length==-1){
     *success=false;
     return 0;
@@ -333,7 +399,12 @@ word_t expr(char *e, bool *success) {
   }
   printf("\n");
 
+  ans=eval_expr(expr,success);
 
-  *success=true;
-  return 0;
+  if(!success){
+    printf("Expression evaluation failed.\n");
+  }
+
+  //*success=true;
+  return ans;
 }
