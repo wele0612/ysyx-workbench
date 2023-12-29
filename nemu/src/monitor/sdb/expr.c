@@ -390,8 +390,8 @@ word_t eval_expr(Suffix_expr expr,bool *success){
       case(TK_TYPE_VALUE):
         if(expr.tokens[i].type==TK_REG){
           expr.tokens[i].num_value=isa_reg_str2val(expr.tokens[i].str,success);
-          printf("Accessing %s, value %ld",expr.tokens[i].str,expr.tokens[i].num_value);
-          if(!success){
+          //printf("Accessing %s, value %ld",expr.tokens[i].str,expr.tokens[i].num_value);
+          if(!*success){
             printf("Error: unknown name %s.\n",expr.tokens[i].str);
             return 0;
           }
