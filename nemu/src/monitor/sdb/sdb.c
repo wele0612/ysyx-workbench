@@ -94,7 +94,7 @@ static int cmd_x(char *args){
   //read n words each time(n=4 for 32bit ISA)
   int isa_wordlength=sizeof(word_t);
   uint64_t addr;
-  if(args!=NULL){
+  if(1){
     n=sscanf(args,"%d",&length);
 
     j=length;
