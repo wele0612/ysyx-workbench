@@ -230,15 +230,6 @@ static bool make_token(char *e,int *length) {
             tokens[nr_token].type=rules[i].token_type;
             strncpy(tokens[nr_token].str,substr_start,substr_len);
 
-            /*
-            if(nr_token>0){
-              if(is_binary_operator&&\
-                typeof_token(&(tokens[nr_token]))==TK_TYPE_VALUE){
-                printf("Error: missing operater for \"%s\"\n",tokens[nr_token].str);
-                return false;
-              }
-            }*/
-
             nr_token++;
         }
 
@@ -255,7 +246,7 @@ static bool make_token(char *e,int *length) {
   tokens[nr_token].str[0]='\0';
 
   for(i=0;i<nr_token;i++){
-    printf("%d -> (%d)%s\n",i,tokens[i].priority,tokens[i].str);
+    //printf("%d -> (%d)%s\n",i,tokens[i].priority,tokens[i].str);
   }
   
 
