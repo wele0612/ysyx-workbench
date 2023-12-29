@@ -148,11 +148,6 @@ static bool make_token(char *e,int *length) {
           }
         }
 
-        if(!is_binary_operator){
-          printf("%.*s may be special\n",substr_len, substr_start);
-        }
-        
-
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
@@ -275,7 +270,8 @@ Token* parse_expr(char *e){
         break;
 
       default:
-        assert(0);
+        stackbuffer[buffer_sp]=i;
+        buffer_sp++;
         break;
     }
     i++;
