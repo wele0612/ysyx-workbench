@@ -93,7 +93,7 @@ WP* wp_pool_remove(int NO,WP *pool){
   }
   if(pool->NO==NO){
     ans=pool->next;
-    printf("123321\n");
+    printf("%d -----\n",pool->NO);
     free(pool);
     return ans;
   }
