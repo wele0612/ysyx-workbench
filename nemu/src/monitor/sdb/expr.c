@@ -136,11 +136,11 @@ static bool make_token(char *e) {
 
         position += substr_len;
 
-        is_binary_operator=true;
+        is_binary_operator=false;
         //Non-binary version of '-' and '*' are different, etc.
         if(nr_token>0){
           if(tokens[nr_token-1].priority==TKPRIOR_OPRAND){
-            is_binary_operator=false;
+            is_binary_operator=true;
           }
         }
 
