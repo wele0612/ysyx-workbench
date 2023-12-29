@@ -261,6 +261,8 @@ Token* parse_expr(char *e, bool *success){
 }
 
 word_t expr(char *e, bool *success) {
+
+  parse_expr(e,success);
   
   /*
   if (!make_token(e)) {
