@@ -119,8 +119,16 @@ static int buffer_sp __attribute__((used))  = 0;
 static bool make_token(char *e,int *length) {
   int position = 0;
   int i;
-  bool is_binary_operator ;
+  bool is_binary_operator;
+  char *temp;
   regmatch_t pmatch;
+
+  temp=malloc(strlen(e)+3);
+  assert(temp);
+  temp[0]='(';
+  strcat(temp,e);
+  strcat(temp,")");
+  e=temp;
 
   nr_token = 0;
 
@@ -246,6 +254,10 @@ Token* parse_expr(char *e, bool *success){
         suffix_expr[j]=tokens[i];
         j++;
         break;
+
+      case(TK_END):
+        break;
+
       default:
         assert(0);
         break;
@@ -273,7 +285,6 @@ word_t expr(char *e, bool *success) {
   */
 
   //TODO();
-  *success=true;
 
   return 0;
 }
