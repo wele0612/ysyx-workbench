@@ -126,6 +126,7 @@ static bool make_token(char *e,int *length) {
   temp=malloc(strlen(e)+3);
   assert(temp);
   temp[0]='(';
+  temp[1]='\0';
   strcat(temp,e);
   strcat(temp,")");
   e=temp;
