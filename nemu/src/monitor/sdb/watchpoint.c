@@ -115,13 +115,34 @@ void wp_pool_display(WP *pool){
   if(pool==NULL){
     return;
   }
-  printf("NO.%d \t%s\33[1;36m(%ld)\33[0m\n",pool->NO,pool->description,(int64_t)pool->prev_value);
+  printf("NO.%d \t%s\33[1;36m (=%ld)\33[0m\n",pool->NO,pool->description,(int64_t)pool->prev_value);
   wp_pool_display(pool->next);
 }
 
 void wp_pool_display_head(){
   printf("Watchpoints:\n");
   wp_pool_display(head);
+}
+
+bool wp_expr_update(WP* pool){
+  bool updated,success;
+  word_t new_value;
+  if(pool==NULL){
+    return false;
+  }
+  new_value=eval_expr(pool->expr,&success);
+  if(!success){
+    printf("Warning: watchpoint NO.%d failed to update.\n",pool->NO);
+    updated=false;
+  }else{
+    updated=(new_value!=pool->prev_value);
+    pool->prev_value=new_value;
+  }
+  return updated||wp_expr_update(pool->next);
+}
+
+bool wp_expr_changed(){
+  return wp_expr_update(head);
 }
 
 /* TODO: Implement the functionality of watchpoint */
