@@ -158,7 +158,7 @@ static int cmd_w(char *args){
     for(i=0;j>0;i++){
       j/=10;
     }
-    e=args+i;
+    e=args+i+1;
   wp_pool_add(NO,e);
   return 0;
 }

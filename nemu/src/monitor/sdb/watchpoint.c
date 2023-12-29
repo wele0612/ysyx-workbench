@@ -51,7 +51,7 @@ void wp_pool_add(int NO,char* e){
   bool success;
 
   if(!is_watch_point_inpool(NO,free_)){
-    printf("NO%d is not avaliable.\n",NO);
+    printf("NO.%d is not avaliable.\n",NO);
     return;
   }
 
