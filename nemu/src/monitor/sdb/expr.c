@@ -29,6 +29,8 @@ enum {
   TK_END,
 
   TK_EQ,
+  TK_NE,
+  TK_LOGIC_AND,
 
   TK_PLUS,
   TK_MINUS,
@@ -70,6 +72,9 @@ static struct rule {
   {"\\+", TK_PLUS,3},         // plus
   {"==", TK_EQ,6},        // equal
   //------------added in PA1--------
+
+  {"!=",TK_NE,6},
+  {"&&",TK_LOGIC_AND,10},
   
   {"\\(",TK_LEFT_B,100},
   {"\\)",TK_RIGHT_B,TKPRIOR_OPRAND},
@@ -432,6 +437,12 @@ word_t eval_expr(Suffix_expr expr,bool *success){
               break;
             case(TK_EQ):
               stack[sp-1]=value2==value1;
+              break;
+            case(TK_NE):
+              stack[sp-1]=value2!=value1;
+              break;
+            case(TK_LOGIC_AND):
+              stack[sp-1]=value2&&value1;
               break;
             default:
               TODO();
