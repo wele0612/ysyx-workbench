@@ -99,6 +99,17 @@ WP* wp_pool_remove(int NO,WP *pool,WP **removed_item){
   return pool;
 }
 
+void wp_free_node(int NO){
+  WP *removed;
+  if(!is_watch_point_inpool(NO,head)){
+    printf("NO.%d cannot be freed.\n",NO);
+    return;
+  }
+  head=wp_pool_remove(NO,head,&removed);
+  removed->next=free_;
+  free_=removed;
+  wp_pool_display_head();
+}
 
 void wp_pool_display(WP *pool){
   if(pool==NULL){

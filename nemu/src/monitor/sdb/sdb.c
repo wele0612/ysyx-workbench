@@ -164,6 +164,11 @@ static int cmd_w(char *args){
 }
 
 static int cmd_d(char *args){
+  int NO;
+  int n=sscanf(args,"%d",&NO);
+  if(n!=1){
+    return 0;
+  }
   return 0;
 }
 
