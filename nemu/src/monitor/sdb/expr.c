@@ -365,6 +365,12 @@ word_t eval_expr(Suffix_expr expr,bool *success){
   int64_t stack[EXPR_MAX_TOKENS];
   int i,sp;
   /*Update regsisters*/
+
+  for(i=0;i<expr.length;i++){
+    printf("%s",expr.tokens[i].str);
+  }
+  printf("\n");
+
   sp=0;
 
   *success=true;
