@@ -136,14 +136,14 @@ static bool make_token(char *e) {
 
         position += substr_len;
 
-        is_binary_operator=false;
+        is_binary_operator=true;
+        //Non-binary version of '-' and '*' are different, etc.
         if(nr_token>0){
           if(tokens[nr_token].priority==TKPRIOR_OPRAND){
-            is_binary_operator=true;
+            is_binary_operator=false;
           }
         }
 
-        
         if(is_binary_operator){
           //printf("%.*s may be special\n",substr_len, substr_start);
         }
@@ -156,6 +156,31 @@ static bool make_token(char *e) {
 
         switch (rules[i].token_type) {
           case(TK_NOTYPE): break;
+
+          case(TK_MINUS):
+            if (is_binary_operator){
+              tokens[nr_token].priority=rules[i].priority;
+              tokens[nr_token].type=rules[i].token_type;
+            }else{
+              tokens[nr_token].priority=1;
+              tokens[nr_token].type=TK_NEG;
+            }
+            strncpy(tokens[nr_token].str,substr_start,substr_len);
+            nr_token++;
+            break;
+
+          case(TK_MULTIPLY):
+            if (is_binary_operator){
+              tokens[nr_token].priority=rules[i].priority;
+              tokens[nr_token].type=rules[i].token_type;
+            }else{
+              tokens[nr_token].priority=1;
+              tokens[nr_token].type=TK_PTR_DEREF;
+            }
+            strncpy(tokens[nr_token].str,substr_start,substr_len);
+            nr_token++;
+            break;
+
           default: 
             tokens[nr_token].priority=rules[i].priority;
             tokens[nr_token].type=rules[i].token_type;
@@ -176,7 +201,7 @@ static bool make_token(char *e) {
   tokens[nr_token].str[0]='\0';
 
   for(i=0;i<EXPR_MAX_TOKENS;i++){
-    printf("%d -> %s\n",i,tokens[i].str);
+    printf("%d -> (%d)%s\n",i,tokens[i].priority,tokens[i].str);
   }
 
   return true;
