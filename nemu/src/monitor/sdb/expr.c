@@ -270,6 +270,18 @@ Token* parse_expr(char *e){
         break;
 
       default:
+        while(1){
+          if(buffer_sp<=0){
+            break;
+          }
+          if(tokens[stackbuffer[buffer_sp-1]].type==TK_LEFT_B\
+            ||tokens[stackbuffer[buffer_sp-1]].priority>tokens[i].priority){
+            break;
+          }
+          buffer_sp--;
+          suffix_expr[j]=tokens[stackbuffer[buffer_sp]];
+          j++;
+        }
         stackbuffer[buffer_sp]=i;
         buffer_sp++;
         break;
