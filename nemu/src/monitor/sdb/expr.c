@@ -348,26 +348,28 @@ word_t eval_expr(Suffix_expr expr,bool *success){
   int i,sp;
   /*Update regsisters*/
   sp=0;
-  value2=0;
-  i=value2;
 
   *success=true;
 
   for(i=0;i<expr.length;i++){
     switch(typeof_token(&(expr.tokens[i]))){
+
       case(TK_TYPE_VALUE):
         stack[sp]=(int64_t)expr.tokens[i].num_value;
         sp++;
         break;
+        
       case(TK_TYPE_SINGLE):
-        if(sp>0){
+        if(sp>=1){
           value1=stack[sp-1];
-          
           switch(expr.tokens[i].type){
             case(TK_NEG):
               stack[sp-1]=-value1;
               break;
             case(TK_PTR_DEREF):
+              TODO();
+              break;
+            default:
               TODO();
               break;
           }
@@ -376,6 +378,38 @@ word_t eval_expr(Suffix_expr expr,bool *success){
         printf("Error: missing oprands in expression.\n");
         *success=false;
         return 0;
+      
+      case(TK_TYPE_BINARY):
+        if(sp>=2){
+          value1=stack[sp-1];
+          value2=stack[sp-2];
+          switch(expr.tokens[i].type){
+            case(TK_PLUS):
+              stack[sp-1]=value2+value1;
+              break;
+            case(TK_MINUS):
+              stack[sp-1]=value2-value1;
+              break;
+            case(TK_MULTIPLY):
+              stack[sp-1]=value2*value1;
+              break;
+            case(TK_DIVIDE):
+              assert(value1!=0);
+              stack[sp-1]=value2/value1;
+              break;
+            case(TK_EQ):
+              stack[sp-1]=value2==value1;
+              break;
+            default:
+              TODO();
+              break;
+          }
+          continue;
+        }
+        printf("Error: missing oprands in expression.\n");
+        *success=false;
+        return 0;
+
       default:
         TODO();
     }
