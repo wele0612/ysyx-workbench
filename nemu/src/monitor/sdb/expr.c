@@ -33,6 +33,8 @@ enum {
   TK_NE,
   TK_LOGIC_AND,
 
+  TK_REG,
+
   TK_PLUS,
   TK_MINUS,
   TK_MULTIPLY,
@@ -50,15 +52,6 @@ enum {
 
 };
 
-/*
-enum {
-  EXPR_TERMINATE,
-  EXPR_CONST,
-  EXPR_REG,
-  EXPR_OPERATOR
-};
-*/
-
 static struct rule {
   const char *regex;
   int token_type;
@@ -73,6 +66,7 @@ static struct rule {
   {"\\+", TK_PLUS,3},         // plus
   {"==", TK_EQ,6},        // equal
   //------------added in PA1--------
+  {"\\$[a-z]+[0-9]*",TK_REG,TKPRIOR_OPRAND},
 
   {"!=",TK_NE,6},
   {"&&",TK_LOGIC_AND,10},
@@ -134,6 +128,7 @@ int typeof_token(Token* token){
   switch(token->type){
     case(TK_NUM_DEC):
     case(TK_NUM_HEX):
+    case(TK_REG):
       return TK_TYPE_VALUE;
 
     case(TK_NEG):
@@ -393,6 +388,13 @@ word_t eval_expr(Suffix_expr expr,bool *success){
     switch(typeof_token(&(expr.tokens[i]))){
 
       case(TK_TYPE_VALUE):
+        if(expr.tokens[i].type==TK_REG){
+          expr.tokens[i].num_value=isa_reg_str2val(expr.tokens[i].str,success);
+          if(!success){
+            printf("Error: unknown name %s.\n",expr.tokens[i].str);
+            return 0;
+          }
+        }
         stack[sp]=(int64_t)expr.tokens[i].num_value;
         sp++;
         break;
