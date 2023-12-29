@@ -264,8 +264,19 @@ Token* parse_expr(char *e){
 
       case(TK_END):
         if(buffer_sp!=0){
-          printf("Error: missing \'(\' in expression.\n");
-          return NULL;
+          while(1){
+            if(buffer_sp<=0){
+              break;
+            }
+            buffer_sp--;
+            if(tokens[stackbuffer[buffer_sp]].type==TK_LEFT_B){
+              printf("Error: extra \'(\' in expression.\n");
+              return NULL;
+            }else{
+              suffix_expr[j]=tokens[stackbuffer[buffer_sp]];
+              j++;
+            }
+          }
         }
         break;
 
