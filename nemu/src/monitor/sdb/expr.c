@@ -109,6 +109,11 @@ typedef struct token {
   int64_t num_value;
 } Token;
 
+typedef struct suffix_expression{
+  int length;
+  Token* tokens;
+} Suffix_expr;
+
 #define EXPR_MAX_TOKENS 32
 
 static Token tokens[EXPR_MAX_TOKENS] __attribute__((used)) = {};
@@ -208,17 +213,20 @@ static bool make_token(char *e,int *length) {
   return true;
 }
 
-Token* parse_expr(char *e){
+Suffix_expr parse_expr(char *e){
   int length;
   int i,j;
   Token* suffix_expr;
+  Suffix_expr ans;
+  ans.length=-1;
+
   if (!make_token(e,&length)) {
-    return NULL;
+    return ans;
   }
   
   suffix_expr=(Token*)malloc(sizeof(Token)*length);
   if(suffix_expr==NULL){
-    return NULL;
+    return ans;
   }
 
   buffer_sp=0;
@@ -250,7 +258,7 @@ Token* parse_expr(char *e){
         while(1){
           if(buffer_sp<=0){
             printf("Error: extra \')\' in expression.\n");
-            return NULL;
+            return ans;
           }
 
           buffer_sp--;
@@ -272,7 +280,7 @@ Token* parse_expr(char *e){
             buffer_sp--;
             if(tokens[stackbuffer[buffer_sp]].type==TK_LEFT_B){
               printf("Error: extra \'(\' in expression.\n");
-              return NULL;
+              return ans;
             }else{
               suffix_expr[j]=tokens[stackbuffer[buffer_sp]];
               j++;
@@ -308,15 +316,30 @@ Token* parse_expr(char *e){
   for(i=0;i<j;i++){
     printf("%s %ld\n",suffix_expr[i].str,suffix_expr[i].num_value);
   }
+  ans.tokens=suffix_expr;
+  ans.length=j;
+  return ans;
+}
 
-  return suffix_expr;
+word_t eval_expr(Token *suffix_expr,bool *success){
+  //Token oprand1,oprand2;
+
+  return 0;
 }
 
 word_t expr(char *e, bool *success) {
-  if(parse_expr(e)==NULL){
+  Suffix_expr expr=parse_expr(e);
+  int i;
+  if(expr.length==-1){
     *success=false;
     return 0;
   }
+
+  for(i=0;i<expr.length;i++){
+    printf("%s",expr.tokens[i].str);
+  }
+  printf("\n");
+
 
   *success=true;
   return 0;
