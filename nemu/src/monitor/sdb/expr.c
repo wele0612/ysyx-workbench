@@ -115,7 +115,7 @@ static int nr_token __attribute__((used))  = 0;
 static bool make_token(char *e) {
   int position = 0;
   int i;
-  bool is_binary_operator;
+  bool is_binary_operator ;
   regmatch_t pmatch;
 
   nr_token = 0;
@@ -143,9 +143,11 @@ static bool make_token(char *e) {
           }
         }
 
+        
         if(is_binary_operator){
-          printf("%.*s may be special\n",substr_len, substr_start);
+          //printf("%.*s may be special\n",substr_len, substr_start);
         }
+        
 
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
