@@ -296,13 +296,16 @@ Suffix_expr parse_expr(char *e){
   while(i<length){
     switch(tokens[i].type){
 
+      case(TK_REG):
+        suffix_expr[j]=tokens[i];
+        j++;
+        break;
+
       case(TK_NUM_DEC):
         sscanf(tokens[i].str,"%ld",&tokens[i].num_value);
         suffix_expr[j]=tokens[i];
         j++;
         break;
-        /*stackbuffer[buffer_sp]=i;
-        buffer_sp++;*/
       
       case(TK_NUM_HEX):
         sscanf(tokens[i].str+2,"%lx",&tokens[i].num_value);
