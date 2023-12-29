@@ -287,6 +287,8 @@ Suffix_expr parse_expr(char *e){
     }
   }
 
+  i=0;
+
   while(i<length){
     switch(tokens[i].type){
 
