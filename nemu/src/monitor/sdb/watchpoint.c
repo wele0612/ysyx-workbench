@@ -81,6 +81,8 @@ void wp_pool_add(int NO,char* e){
   new_pool->prev_value=value;
   head=new_pool;
 
+  printf("123321\n");
+
   wp_pool_remove(NO,free_);
 
   return;
