@@ -46,6 +46,7 @@ enum {
   /* TODO: Add more token types */
 
 };
+
 /*
 enum {
   EXPR_TERMINATE,
@@ -116,6 +117,34 @@ typedef struct suffix_expression{
   Token* tokens;
 } Suffix_expr;
 
+enum{
+  TK_TYPE_VALUE,
+  TK_TYPE_SINGLE,
+  TK_TYPE_BINARY,
+  TK_TYPE_STRUCT
+};
+
+int typeof_token(Token* token){
+  switch(token->type){
+    case(TK_NUM_DEC):
+    case(TK_NUM_HEX):
+      return TK_TYPE_VALUE;
+
+    case(TK_NEG):
+    case(TK_PTR_DEREF):
+      return TK_TYPE_SINGLE;
+    
+    case(TK_END):
+    case(TK_LEFT_B):
+    case(TK_RIGHT_B):
+      return TK_TYPE_STRUCT;
+    
+    default:
+      return TK_TYPE_BINARY;
+  }
+}
+
+
 #define EXPR_MAX_TOKENS 32
 
 static Token tokens[EXPR_MAX_TOKENS] __attribute__((used)) = {};
@@ -153,6 +182,7 @@ static bool make_token(char *e,int *length) {
 
         is_binary_operator=false;
         //Non-binary version of '-' and '*' are different, etc.
+        //Non-binary means item before it is not a oprand.
         if(nr_token>0){
           if(tokens[nr_token-1].priority==TKPRIOR_OPRAND){
             is_binary_operator=true;
@@ -198,8 +228,21 @@ static bool make_token(char *e,int *length) {
             tokens[nr_token].type=rules[i].token_type;
             strncpy(tokens[nr_token].str,substr_start,substr_len);
             tokens[nr_token].str[substr_len]='\0';
+
+            if(nr_token>0){
+              if(is_binary_operator&&\
+                typeof_token(&(tokens[nr_token]))==TK_TYPE_VALUE){
+                printf("Error: missing operater near \"%5s\"",e+position);
+                return false;
+              }
+            }
+
             nr_token++;
         }
+
+        
+
+
         break;
       }
     };
@@ -320,33 +363,6 @@ Suffix_expr parse_expr(char *e){
   ans.tokens=suffix_expr;
   ans.length=j;
   return ans;
-}
-
-enum{
-  TK_TYPE_VALUE,
-  TK_TYPE_SINGLE,
-  TK_TYPE_BINARY,
-  TK_TYPE_STRUCT
-};
-
-int typeof_token(Token* token){
-  switch(token->type){
-    case(TK_NUM_DEC):
-    case(TK_NUM_HEX):
-      return TK_TYPE_VALUE;
-
-    case(TK_NEG):
-    case(TK_PTR_DEREF):
-      return TK_TYPE_SINGLE;
-    
-    case(TK_END):
-    case(TK_LEFT_B):
-    case(TK_RIGHT_B):
-      return TK_TYPE_STRUCT;
-    
-    default:
-      return TK_TYPE_BINARY;
-  }
 }
 
 word_t eval_expr(Suffix_expr expr,bool *success){
