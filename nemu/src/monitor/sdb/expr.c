@@ -213,7 +213,7 @@ static bool make_token(char *e,int *length) {
   tokens[nr_token].str[0]='\0';
 
   for(i=0;i<nr_token;i++){
-    printf("%d -> (%d)%s\n",i,tokens[i].priority,tokens[i].str);
+    //printf("%d -> (%d)%s\n",i,tokens[i].priority,tokens[i].str);
   }
   
 
@@ -446,7 +446,7 @@ word_t expr(char *e, bool *success) {
   printf("\n");
 
   ans=eval_expr(expr,success);
-  printf("%d\n",ans);
+  //printf("%d\n",ans);
 
   if(!*success){
     printf("Expression evaluation failed.\n");
