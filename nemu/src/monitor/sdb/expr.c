@@ -283,7 +283,8 @@ Suffix_expr parse_expr(char *e){
   j=0;
 
   for(i=1;i<length;i++){
-    if(typeof_token(&tokens[i])==typeof_token(&tokens[i-1])){
+    if(typeof_token(&tokens[i])!=TK_TYPE_STRUCT&&\
+      typeof_token(&tokens[i])==typeof_token(&tokens[i-1])){
       printf("Error: syntex error near \"%s\"\n",tokens[i].str);
       return ans;
     }
