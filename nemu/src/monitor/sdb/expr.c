@@ -22,6 +22,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <memory/vaddr.h>
 
 #define TKPRIOR_OPRAND 255
 enum {
@@ -404,7 +405,7 @@ word_t eval_expr(Suffix_expr expr,bool *success){
               stack[sp-1]=-value1;
               break;
             case(TK_PTR_DEREF):
-              TODO();
+              stack[sp-1]=vaddr_read(value1,4);
               break;
             default:
               TODO();
