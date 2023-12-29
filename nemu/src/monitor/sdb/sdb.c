@@ -107,7 +107,7 @@ static int cmd_x(char *args){
       return 0;
     }
 
-    if(n==2){
+    if(n==1){
       printf("Memory (\33[1;36m0x%lx\33[0m)+%d\n",addr,length);
       printf(ANSI_FG_YELLOW);
       printf("           +0 +1 +2 +3\n");
