@@ -172,7 +172,6 @@ static bool make_token(char *e,int *length) {
               tokens[nr_token].priority=1;
               tokens[nr_token].type=TK_NEG;
             }
-            printf("%d\n",substr_len);
             strncpy(tokens[nr_token].str,substr_start,substr_len);
             nr_token++;
             break;
@@ -192,6 +191,9 @@ static bool make_token(char *e,int *length) {
           default: 
             tokens[nr_token].priority=rules[i].priority;
             tokens[nr_token].type=rules[i].token_type;
+
+            printf("%d\n",substr_len);
+            
             strncpy(tokens[nr_token].str,substr_start,substr_len);
             nr_token++;
         }
