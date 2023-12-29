@@ -203,12 +203,12 @@ static bool make_token(char *e,int *length) {
             if (is_binary_operator){
               tokens[nr_token].priority=rules[i].priority;
               tokens[nr_token].type=rules[i].token_type;
+              tokens[nr_token].str[0]='-';
             }else{
               tokens[nr_token].priority=1;
               tokens[nr_token].type=TK_NEG;
               tokens[nr_token].str[0]='n';
             }
-            strncpy(tokens[nr_token].str,substr_start,substr_len);
             tokens[nr_token].str[substr_len]='\0';
             nr_token++;
             break;
