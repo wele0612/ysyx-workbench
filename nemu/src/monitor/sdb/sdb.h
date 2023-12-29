@@ -16,8 +16,23 @@
 #ifndef __SDB_H__
 #define __SDB_H__
 
+#define TOKEN_STR_LENGTH 32
+
 #include <common.h>
 
+typedef struct token {
+  int type;
+  char str[TOKEN_STR_LENGTH];
+  int16_t priority;
+  int64_t num_value;
+} Token;
+
+typedef struct suffix_expression{
+  int length;
+  Token* tokens;
+} Suffix_expr;
+
 word_t expr(char *e, bool *success);
+word_t eval_expr(Suffix_expr expr,bool *success);
 
 #endif

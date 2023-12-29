@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <memory/vaddr.h>
+#include "sdb.h"
 
 #define TKPRIOR_OPRAND 255
 enum {
@@ -103,19 +104,7 @@ void init_regex() {
   }
 }
 
-#define TOKEN_STR_LENGTH 32
 
-typedef struct token {
-  int type;
-  char str[TOKEN_STR_LENGTH];
-  int16_t priority;
-  int64_t num_value;
-} Token;
-
-typedef struct suffix_expression{
-  int length;
-  Token* tokens;
-} Suffix_expr;
 
 enum{
   TK_TYPE_VALUE,

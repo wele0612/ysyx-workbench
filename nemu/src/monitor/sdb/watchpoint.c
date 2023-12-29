@@ -19,6 +19,8 @@
 
 typedef struct watchpoint {
   int NO;
+  word_t prev_value;
+  Suffix_expr expr;
   struct watchpoint *next;
 
   /* TODO: Add more members if necessary */
