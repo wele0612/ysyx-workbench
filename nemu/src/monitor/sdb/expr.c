@@ -50,8 +50,8 @@ static struct rule {
   {"-",'-'},
   {"*",'*'},//may need to fix precedence levels
   {"/",'/'},
-  {"0x[0-9a-f]+",TK_NUM_HEX},
-  {"[0-9]+",TK_NUM_DEC}
+  //{"0x[0-9a-f]+",TK_NUM_HEX},
+  //{"[0-9]+",TK_NUM_DEC}
 
 };
 
