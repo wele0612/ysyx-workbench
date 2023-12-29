@@ -52,5 +52,6 @@ Suffix_expr parse_expr(char *e);
 WP* wp_pool_remove(int NO,WP *pool,WP **removed_item);
 void wp_pool_display_head();
 void wp_pool_add(int NO,char* e);
+void wp_free_node(int NO);
 
 #endif
