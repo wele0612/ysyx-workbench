@@ -169,8 +169,8 @@ static bool make_token(char *e) {
       return false;
     }
   }
-  tokens[nr_token+1].type=TK_END;
-  tokens[nr_token+1].str[0]='\0';
+  tokens[nr_token].type=TK_END;
+  tokens[nr_token].str[0]='\0';
 
   for(i=0;i<EXPR_MAX_TOKENS;i++){
     printf("%d -> %s\n",i,tokens[i].str);
