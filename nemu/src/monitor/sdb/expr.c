@@ -139,7 +139,7 @@ static bool make_token(char *e) {
         is_binary_operator=true;
         //Non-binary version of '-' and '*' are different, etc.
         if(nr_token>0){
-          if(tokens[nr_token].priority==TKPRIOR_OPRAND){
+          if(tokens[nr_token-1].priority==TKPRIOR_OPRAND){
             is_binary_operator=false;
           }
         }
