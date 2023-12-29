@@ -49,7 +49,7 @@ word_t expr(char *e, bool *success);
 word_t eval_expr(Suffix_expr expr,bool *success);
 Suffix_expr parse_expr(char *e);
 
-WP* wp_pool_remove(int NO,WP *pool);
+WP* wp_pool_remove(int NO,WP *pool,WP **removed_item);
 void wp_pool_display_head();
 void wp_pool_add(int NO,char* e);
 

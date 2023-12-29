@@ -72,32 +72,30 @@ void wp_pool_add(int NO,char* e){
   if(!success){
     printf("Error: Invalid expression.\n");
   }
-
-  WP* new_pool=malloc(sizeof(WP));
+  WP* new_pool;
+  free_=wp_pool_remove(NO,free_,&new_pool);
   assert(new_pool!=NULL);
   new_pool->next=head;
   new_pool->NO=NO;
   strncpy(new_pool->description,e,DESCRIPTION_LENGTH-1);
   new_pool->prev_value=value;
-  head=new_pool;
-
-  wp_pool_remove(NO,free_);
+  head=new_pool;  
 
   return;
 }
 
-WP* wp_pool_remove(int NO,WP *pool){
+WP* wp_pool_remove(int NO,WP *pool,WP **removed_item){
   WP *ans;
   if(pool==NULL){
     return NULL;
   }
   if(pool->NO==NO){
     ans=pool->next;
-    printf("%d -----\n",pool->NO);
-    free(pool);
+    //printf("%d -----\n",pool->NO);
+    *removed_item=pool;
     return ans;
   }
-  pool->next=wp_pool_remove(NO,pool->next);
+  pool->next=wp_pool_remove(NO,pool->next,removed_item);
   return pool;
 }
 
