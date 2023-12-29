@@ -33,11 +33,28 @@ void init_wp_pool() {
   free_ = wp_pool;
 }
 
+bool is_watch_point_inpool(int NO,WP *pool){
+  if(pool==NULL){
+    return false;
+  }
+  if(pool->NO==NO){
+    return true;
+  }else{
+    return is_watch_point_inpool(NO,pool->next);
+  }
+}
+
 //return linked list head, with item removed
 void wp_pool_add(int NO,char* e){
   Suffix_expr expr;
   int i;
   bool success;
+
+  if(!is_watch_point_inpool(NO,free_)){
+    printf("NO%d is not avaliable.\n",NO);
+    return;
+  }
+
   expr=parse_expr(e);
   printf("Expression: %s\n",e);
   if(expr.length==-1){
@@ -64,6 +81,8 @@ void wp_pool_add(int NO,char* e){
   new_pool->prev_value=value;
   head=new_pool;
 
+  wp_pool_remove(NO,free_);
+
   return;
 }
 
@@ -84,7 +103,7 @@ void wp_pool_display(WP *pool){
   if(pool==NULL){
     return;
   }
-  printf("NO.%d %s\n",pool->NO,pool->description);
+  printf("NO.%d \t%s\n",pool->NO,pool->description);
   wp_pool_display(pool->next);
 }
 
