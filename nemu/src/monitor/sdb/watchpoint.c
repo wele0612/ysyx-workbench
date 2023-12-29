@@ -77,6 +77,7 @@ void wp_pool_add(int NO,char* e){
   assert(new_pool!=NULL);
   new_pool->next=head;
   new_pool->NO=NO;
+  new_pool->expr=expr;
   strncpy(new_pool->description,e,DESCRIPTION_LENGTH-1);
   new_pool->prev_value=value;
   head=new_pool;  
@@ -107,6 +108,7 @@ void wp_free_node(int NO){
   }
   head=wp_pool_remove(NO,head,&removed);
   removed->next=free_;
+  free(removed->expr.tokens);
   free_=removed;
   wp_pool_display_head();
 }
