@@ -218,7 +218,7 @@ static bool make_token(char *e,int *length) {
     printf("%d -> (%d)%s\n",i,tokens[i].priority,tokens[i].str);
   }
 
-  *length=nr_token;
+  *length=nr_token+1;
   return true;
 }
 
