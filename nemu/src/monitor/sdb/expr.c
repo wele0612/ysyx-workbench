@@ -188,6 +188,7 @@ static bool make_token(char *e,int *length) {
             is_binary_operator=true;
           }
         }
+        tokens[nr_token].str[substr_len]='\0';
 
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
@@ -227,7 +228,6 @@ static bool make_token(char *e,int *length) {
             tokens[nr_token].priority=rules[i].priority;
             tokens[nr_token].type=rules[i].token_type;
             strncpy(tokens[nr_token].str,substr_start,substr_len);
-            tokens[nr_token].str[substr_len]='\0';
 
             if(nr_token>0){
               if(is_binary_operator&&\
@@ -239,9 +239,6 @@ static bool make_token(char *e,int *length) {
 
             nr_token++;
         }
-
-        
-
 
         break;
       }
@@ -283,6 +280,13 @@ Suffix_expr parse_expr(char *e){
   buffer_sp=0;
   i=0;
   j=0;
+
+  for(i=1;i<length;i++){
+    if(typeof_token(&tokens[i])==typeof_token(&tokens[i-1])){
+      printf("Error: syntex error at \"%s\"\n",tokens[i].str);
+    }
+  }
+
   while(i<length){
     switch(tokens[i].type){
 
