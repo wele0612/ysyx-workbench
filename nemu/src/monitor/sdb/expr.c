@@ -129,7 +129,7 @@ static bool make_token(char *e,int *length) {
   bool is_binary_operator;
   regmatch_t pmatch;
 
-  printf("e: %s\n",e);
+  //printf("e: %s\n",e);
 
   nr_token = 0;
 
