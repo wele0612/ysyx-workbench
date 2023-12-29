@@ -19,41 +19,60 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <string.h>
 
+#define TKPRIOR_OPRAND 255
 enum {
-  TK_NOTYPE = 256, TK_EQ,
+  TK_NOTYPE, 
+  TK_EQ,
+
+  TK_PLUS,
+  TK_MINUS,
+  TK_MULTIPLY,
+  TK_DIVIDE,
+
   TK_LEFT_B,
   TK_RIGHT_B,
   TK_NUM_DEC,
-  TK_NUM_HEX
+  TK_NUM_HEX,
 
+  TK_NEG,
+  TK_PTR_DEREF
 
   /* TODO: Add more token types */
 
 };
 
+enum {
+  EXPR_TERMINATE,
+  EXPR_CONST,
+  EXPR_REG,
+  EXPR_OPERATOR
+};
+
 static struct rule {
   const char *regex;
   int token_type;
+  int priority;//priority of operator, not rule!!
 } rules[] = {
 
   /* TODO: Add more rules.
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
-  {"==", TK_EQ},        // equal
+  {" +", TK_NOTYPE,0},    // spaces
+  {"\\+", TK_PLUS,3},         // plus
+  {"==", TK_EQ,6},        // equal
   //------------added in PA1--------
   
-  {"\\(",TK_LEFT_B},
-  {"\\)",TK_RIGHT_B},
+  {"\\(",TK_LEFT_B,100},
+  {"\\)",TK_RIGHT_B,TKPRIOR_OPRAND},
   
-  {"-",'-'},
-  {"\\*",'*'},//may need to fix precedence levels
-  {"/",'/'},
-  {"0x[0-9a-f]+",TK_NUM_HEX},
-  {"[0-9]+",TK_NUM_DEC}
+  {"-",TK_MINUS,3},
+  {"\\*",TK_MULTIPLY,2},//may need to fix precedence levels
+  {"/",TK_DIVIDE,2},
+  {"0x[0-9a-f]+",TK_NUM_HEX,TKPRIOR_OPRAND},
+  {"[0-9]+",TK_NUM_DEC,TKPRIOR_OPRAND}
 
 };
 
@@ -81,20 +100,28 @@ void init_regex() {
 typedef struct token {
   int type;
   char str[32];
+  int priority;
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+#define EXPR_MAX_TOKENS 8
+
+static Token tokens[EXPR_MAX_TOKENS] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
   int position = 0;
   int i;
+  bool is_binary_operator;
   regmatch_t pmatch;
 
   nr_token = 0;
 
   while (e[position] != '\0') {
     /* Try all rules one by one. */
+    if(position>=EXPR_MAX_TOKENS){
+      printf("Error: expression too long.\n");
+      return false;
+    }
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
@@ -105,13 +132,28 @@ static bool make_token(char *e) {
 
         position += substr_len;
 
+        is_binary_operator=false;
+        if(nr_token>0){
+          if(tokens[nr_token].priority==TKPRIOR_OPRAND){
+            is_binary_operator=true;
+          }
+        }
+
+        if(is_binary_operator){
+          printf("%.*s may be special",substr_len, substr_start);
+        }
+
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
 
         switch (rules[i].token_type) {
-          default: //TODO();
+          case(TK_NOTYPE): continue;
+          default: 
+            tokens[position].priority=rules[i].priority;
+            tokens[position].type=rules[i].token_type;
+            strncpy(tokens[position].str,substr_start,substr_len);
         }
 
         break;
@@ -122,6 +164,10 @@ static bool make_token(char *e) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
+  }
+
+  for(i=0;i<EXPR_MAX_TOKENS;i++){
+    printf("%s\n",tokens[i].str);
   }
 
   return true;
