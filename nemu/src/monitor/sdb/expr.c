@@ -154,16 +154,17 @@ static bool make_token(char *e) {
 
         switch (rules[i].token_type) {
           case(TK_NOTYPE): break;
-          default: break;
-            
+          default: 
+            tokens[nr_token].priority=rules[i].priority;
+            tokens[nr_token].type=rules[i].token_type;
+            strncpy(tokens[nr_token].str,substr_start,substr_len);
+            nr_token++;
         }
-        tokens[nr_token].priority=rules[i].priority;
-        tokens[nr_token].type=rules[i].token_type;
-        strncpy(tokens[nr_token].str,substr_start,substr_len);
-        nr_token++;
+
         break;
       }
     }
+    printf("nr_token:%d\n",nr_token);
 
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
