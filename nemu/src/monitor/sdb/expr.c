@@ -196,8 +196,8 @@ static bool make_token(char *e,int *length) {
 
             printf("%d\n",substr_len);
 
-            strncpy(tokens[nr_token].str,substr_start,substr_len);
-            tokens[nr_token].str[substr_len]='\0';
+            strncpy(tokens[nr_token].str,substr_start,substr_len+1);
+            //tokens[nr_token].str[substr_len]='\0';
             nr_token++;
         }
         break;
