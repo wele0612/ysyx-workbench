@@ -400,6 +400,7 @@ word_t expr(char *e, bool *success) {
   printf("\n");
 
   ans=eval_expr(expr,success);
+  printf("%d",ans);
 
   if(!success){
     printf("Expression evaluation failed.\n");
