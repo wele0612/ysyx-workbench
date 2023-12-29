@@ -87,6 +87,7 @@ static int cmd_info(char *args){
 
 static int cmd_x(char *args){
   int length,n=0,i,j;
+  bool success;
   word_t valuew;
   uint8_t value8;
 
@@ -94,7 +95,18 @@ static int cmd_x(char *args){
   int isa_wordlength=sizeof(word_t);
   uint64_t addr;
   if(args!=NULL){
-    n=sscanf(args,"%d %lx",&length,&addr);
+    n=sscanf(args,"%d",&length);
+
+    j=length;
+    for(i=0;j>0;i++){
+      j/=10;
+    }
+    addr=expr(args+i,&success);
+    if(!success){
+      printf("Invalid address expression.\n");
+      return 0;
+    }
+
     if(n==2){
       printf("Memory (\33[1;36m0x%lx\33[0m)+%d\n",addr,length);
       printf(ANSI_FG_YELLOW);
