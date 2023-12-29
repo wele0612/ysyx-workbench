@@ -383,6 +383,7 @@ word_t eval_expr(Suffix_expr expr,bool *success){
         if(sp>=2){
           value1=stack[sp-1];
           value2=stack[sp-2];
+          sp--;
           switch(expr.tokens[i].type){
             case(TK_PLUS):
               stack[sp-1]=value2+value1;
