@@ -89,6 +89,7 @@ void wp_pool_display(WP *pool){
 }
 
 void wp_pool_display_head(){
+  printf("Watchpoints:\n");
   wp_pool_display(head);
 }
 
