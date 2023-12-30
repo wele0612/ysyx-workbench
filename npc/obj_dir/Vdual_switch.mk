@@ -4,7 +4,7 @@
 # Execute this makefile from the object directory:
 #    make -f Vdual_switch.mk
 
-default: Vdual_switch
+default: Vdual_switch__ALL.a
 
 ### Constants...
 # Perl executable (from $PERL)
@@ -41,11 +41,9 @@ VM_USER_LDLIBS = \
 
 # User .cpp files (from .cpp's on Verilator command line)
 VM_USER_CLASSES = \
-	sim_main \
 
 # User .cpp directories (from .cpp's on Verilator command line)
 VM_USER_DIR = \
-	/home/tianyi/projects/ysyx-workbench/npc/csrc/pre_dual_switch \
 
 
 ### Default rules...
@@ -53,16 +51,5 @@ VM_USER_DIR = \
 include Vdual_switch_classes.mk
 # Include global rules
 include $(VERILATOR_ROOT)/include/verilated.mk
-
-### Executable rules... (from --exe)
-VPATH += $(VM_USER_DIR)
-
-sim_main.o: /home/tianyi/projects/ysyx-workbench/npc/csrc/pre_dual_switch/sim_main.cpp
-	$(OBJCACHE) $(CXX) $(CXXFLAGS) $(CPPFLAGS) $(OPT_FAST) -c -o $@ $<
-
-### Link rules... (from --exe)
-Vdual_switch: $(VK_USER_OBJS) $(VK_GLOBAL_OBJS) $(VM_PREFIX)__ALL.a $(VM_HIER_LIBS)
-	$(LINK) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) $(LIBS) $(SC_LIBS) -o $@
-
 
 # Verilated -*- Makefile -*-
