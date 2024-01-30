@@ -44,8 +44,9 @@ object TopSpec extends ChiselUtestTester {
             dut.clock.step(10)
             dut.output.expectDequeueSeq(seq2)
           }.join()
-        */
+        
       }
+      */
     }
   }
 
