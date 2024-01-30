@@ -4,7 +4,7 @@ import chisel3._
  * Bundle for nvboard
   */
 class NVboard_IOs extends Bundle{
-  val ledr=Output(Vec(16,Bool()))
+  val ledr=Output(VecInit(Seq.fill(16)(false.B)))
 }
 class Top_Module extends Module {
   val io=IO(new NVboard_IOs)
