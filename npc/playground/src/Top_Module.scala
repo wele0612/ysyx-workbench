@@ -9,6 +9,6 @@ class NVboard_IOs extends Bundle{
 class Top_Module extends Module {
   val io=IO(new NVboard_IOs)
 
-  io.ledr(0)=true.B
-  io.ledr(1)=false.B
+  io.ledr(0):=true.B
+  io.ledr(1):=false.B
 }
