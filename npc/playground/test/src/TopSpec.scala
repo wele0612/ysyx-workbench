@@ -17,6 +17,7 @@ import utest._
   */
   
 object TopSpec extends ChiselUtestTester {
+  val name="Top module test"
   /*
   val tests = Tests {
     test("GCD") {
