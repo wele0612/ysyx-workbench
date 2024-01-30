@@ -15,8 +15,9 @@ import utest._
   * sbt 'testOnly gcd.GcdDecoupledTester'
   * }}}
   */
+  
+object TopSpec extends ChiselUtestTester {
   /*
-object GCDSpec extends ChiselUtestTester {
   val tests = Tests {
     test("GCD") {
       testCircuit(new DecoupledGcd(16)) {
@@ -46,6 +47,7 @@ object GCDSpec extends ChiselUtestTester {
       }
     }
   }
+  */
   
 }
-*/
+
