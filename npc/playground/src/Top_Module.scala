@@ -7,7 +7,7 @@ class NVboard_IOs extends Bundle{
   val ledr=Output(Vec(16,Bool()))
 
   def loadDefault():Unit={
-    ledr:=0.U.asTypeOf(io.ledr)
+    ledr:=0.U.asTypeOf(ledr)
   }
 }
 class Top_Module extends Module {
