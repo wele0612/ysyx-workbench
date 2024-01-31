@@ -1,6 +1,7 @@
 import chisel3._
 import chisel3.util.Mux1H
 import chisel3.util.Reverse
+import chisel3.util.PopCount
 
 /**
  * Bundle for nvboard
@@ -16,5 +17,5 @@ class NVboard_IOs extends Bundle{
 }
 class Top_Module extends Module {
   val io=IO(new NVboard_IOs())
-  io.ledr:=Reverse(io.sw)
+  io.ledr:=PopCount(io.sw.asBools)
 }
