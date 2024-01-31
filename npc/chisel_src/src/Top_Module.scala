@@ -1,5 +1,6 @@
 import chisel3._
 import chisel3.util.Mux1H
+import chisel3.util.Reverse
 
 /**
  * Bundle for nvboard
@@ -14,16 +15,6 @@ class NVboard_IOs extends Bundle{
   }
 }
 class Top_Module extends Module {
-  val io=IO(new NVboard_IOs)
-  val nv_sw=VecInit(io.sw.asBools)
-  val nv_ledr=VecInit.fill(16)(false.B)
-
-  io.loadDefault()
-
-  nv_ledr(0):=Mux(nv_sw(2),nv_sw(1),nv_sw(0))
-  nv_ledr(1):=Mux1H(
-    VecInit(nv_sw(3),nv_sw(4),nv_sw(5)),
-    VecInit(true.B,false.B,true.B))
-
-  io.ledr:=nv_ledr.asUInt
+  val io=IO(new NVboard_IOs())
+  io.ledr:=Reverse(io.sw)
 }
