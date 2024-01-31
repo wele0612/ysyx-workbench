@@ -12,7 +12,7 @@ BIN = $(BUILD_DIR)/$(TOP_NAME)
 
 export PATH := $(PATH):$(abspath ./utils)
 
-NVBOARD_SRCS = $(shell find $(NVBOARD_HOME)/SRC -name "*.cpp")
+NVBOARD_SRCS = $(shell find $(NVBOARD_HOME)/src -name "*.cpp")
 NVBOARD_INC = $(NVBOARD_HOME)/include
 
 #project source file
@@ -26,7 +26,7 @@ CSRCS += $(NVBOARD_SRCS)
 LDFLAGS += $(shell sdl2-config --libs) -lSDL2_image
 
 # rules for verilator when using nvboard
-INC_PATH += NVBOARD_INC
+INC_PATH += $(NVBOARD_INC)
 INCFLAGS = $(addprefix -I, $(INC_PATH))
 CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
 
