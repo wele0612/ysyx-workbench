@@ -17,5 +17,5 @@ class NVboard_IOs extends Bundle{
 }
 class Top_Module extends Module {
   val io=IO(new NVboard_IOs())
-  io.ledr:=Mux1H(io.ledr,List.range(1,16).map((_).U(16.W)))
+  io.ledr:=Mux1H(io.sw,List.range(1,16).map((_).U(16.W)))
 }
