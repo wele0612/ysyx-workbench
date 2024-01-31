@@ -7,7 +7,7 @@ class NVboard_IOs extends Bundle{
   val ledr=Output(UInt(16.W))
 
   def loadDefault():Unit={
-    ledr:=0.U.asTypeOf(ledr)
+    ledr:=3.U //.asTypeOf(ledr)
   }
 }
 class Top_Module extends Module {
@@ -15,6 +15,6 @@ class Top_Module extends Module {
 
   io.loadDefault()
 
-  io.ledr(0):=true.B
-  io.ledr(1):=false.B
+  //io.ledr(0):=true.B
+  //io.ledr(1):=false.B
 }
