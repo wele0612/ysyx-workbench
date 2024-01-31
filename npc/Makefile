@@ -9,9 +9,11 @@ OBJ_DIR = $(BUILD_DIR)/obj_dir
 BIN = $(BUILD_DIR)/$(TOP_NAME)
 
 
+
 export PATH := $(PATH):$(abspath ./utils)
 
-VSRCS = $(shell find -name "*.v")
+VSRCS = $(shell find $(abspath $(BUILD_DIR)) -name "*.v")
+CSRCS = $(shell find -name "*.c")
 NVBOARD_SRCS = $(shell find $(NVBOARD_HOME)/SRC -name "*.cpp")
 NVBOARD_INC = $(NVBOARD_HOME)/include
 
