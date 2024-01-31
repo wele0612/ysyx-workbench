@@ -43,6 +43,7 @@ nvboard: verilog $(VSRCS) $(CSRCS)
 		--top-module $(TOP_NAME) $(VSRCS) $(CSRCS) \
 		$(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
 		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
+	$(BUILD_DIR)/$(TOP_NAME)
 
 testmake:
 	echo $(VSRC)
