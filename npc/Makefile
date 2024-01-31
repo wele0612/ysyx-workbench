@@ -17,7 +17,7 @@ NVBOARD_INC = $(NVBOARD_HOME)/include
 
 nvboard: verilog $(VSRCS) $(CSRCS)
 	verilator $(VERILATOR_CFLAGS) \
-		--top-module $(TOP_NAME) $^ \
+		--top-module $(TOP_NAME) $(VSRCS) $(CSRCS) \
 		$(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
 		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
 
