@@ -12,12 +12,23 @@ BIN = $(BUILD_DIR)/$(TOP_NAME)
 
 export PATH := $(PATH):$(abspath ./utils)
 
+NVBOARD_SRCS = $(shell find $(NVBOARD_HOME)/SRC -name "*.cpp")
+NVBOARD_INC = $(NVBOARD_HOME)/include
+
+#project source file
 VSRCS = $(shell find $(abspath $(BUILD_DIR)) -name "*.v")
 CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
 CSRCS += $(SRC_AUTO_BIND)
+CSRCS += $(NVBOARD_SRCS)
 
-NVBOARD_SRCS = $(shell find $(NVBOARD_HOME)/SRC -name "*.cpp")
-NVBOARD_INC = $(NVBOARD_HOME)/include
+
+#link flags
+LDFLAGS += $(shell sdl2-config --libs) -lSDL2_image
+
+# rules for verilator when using nvboard
+INC_PATH += NVBOARD_INC
+INCFLAGS = $(addprefix -I, $(INC_PATH))
+CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
 
 nvboard: verilog $(VSRCS) $(CSRCS)
 	verilator $(VERILATOR_CFLAGS) \
