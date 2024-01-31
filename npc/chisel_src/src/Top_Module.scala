@@ -9,13 +9,13 @@ class NVboard_IOs extends Bundle{
 
    
   def loadDefault():Unit={
-    ledr:=0.U//.asTypeOf(ledr)
+    ledr:=0.U(16.W)//.asTypeOf(ledr)
   }
 }
 class Top_Module extends Module {
   val io=IO(new NVboard_IOs)
   val nv_sw=VecInit(io.sw.asBools)
-  val nv_ledr=Wire(VecInit.fill(16)(false.B))
+  val nv_ledr=VecInit.fill(16)(false.B)
 
   io.loadDefault()
 
