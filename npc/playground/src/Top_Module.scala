@@ -4,7 +4,7 @@ import chisel3._
  * Bundle for nvboard
   */
 class NVboard_IOs extends Bundle{
-  val ledr=Output(Vec(16,Bool()))
+  val ledr=Output(UInt(16.W))
 
   def loadDefault():Unit={
     ledr:=0.U.asTypeOf(ledr)
