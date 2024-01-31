@@ -1,5 +1,6 @@
 BUILD_DIR = ./build
 NVBOARD_HOME = /home/tianyi/projects/ysyx-workbench/nvboard
+NXDC_FILES = ./scripts/nvboard_autobind/default_nvboard.nxdc
 
 TOP_NAME = Top_Module
 VERILATOR_CFLAGS += -MMD --build -cc  \
@@ -8,7 +9,10 @@ OBJ_DIR = $(BUILD_DIR)/obj_dir
 
 BIN = $(BUILD_DIR)/$(TOP_NAME)
 
-
+# constraint file
+SRC_AUTO_BIND = $(abspath $(BUILD_DIR)/nvboard/auto_bind.cpp)
+$(SRC_AUTO_BIND): $(NXDC_FILES)
+	python3 $(NVBOARD_HOME)/scripts/auto_pin_bind.py $^ $@
 
 export PATH := $(PATH):$(abspath ./utils)
 
