@@ -20,7 +20,7 @@ class Top_Module extends Module {
   io.loadDefault()
   io.ledr:=nv_ledr.asUInt
 
-  nv_ledr(0):=Mux(nv_sw(2),nv_sw(1),nv_sw(0))
+  io.ledr(0):=Mux(nv_sw(2),nv_sw(1),nv_sw(0))
 
   //io.ledr(0):=true.B
   //io.ledr(1):=false.B
