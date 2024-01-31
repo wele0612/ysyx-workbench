@@ -41,7 +41,7 @@ CXXFLAGS +=
 
 nvboard: verilog $(VSRCS) $(CSRCS) $(NVBOARD_SRCS)
 	verilator $(VERILATOR_CFLAGS) \
-		--top-module $(TOP_NAME) $(VSRCS) $(CSRCS) \
+		--top-module $(TOP_NAME) $(VSRCS) $(CSRCS) $(NVBOARD_SRCS)\
 		$(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
 		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
 	$(BUILD_DIR)/$(TOP_NAME)
