@@ -13,7 +13,9 @@ BIN = $(BUILD_DIR)/$(TOP_NAME)
 export PATH := $(PATH):$(abspath ./utils)
 
 VSRCS = $(shell find $(abspath $(BUILD_DIR)) -name "*.v")
-CSRCS = $(shell find -name "*.c")
+CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
+CSRCS += $(SRC_AUTO_BIND)
+
 NVBOARD_SRCS = $(shell find $(NVBOARD_HOME)/SRC -name "*.cpp")
 NVBOARD_INC = $(NVBOARD_HOME)/include
 
