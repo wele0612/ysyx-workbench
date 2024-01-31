@@ -14,7 +14,7 @@ class NVboard_IOs extends Bundle{
 }
 class Top_Module extends Module {
   val io=IO(new NVboard_IOs)
-  val nv_sw=VecInit(io.sw.asBools)
+  val nv_sw=Wire(VecInit(io.sw.asBools))
 
   io.loadDefault()
 
