@@ -1,6 +1,28 @@
 BUILD_DIR = ./build
+NVBOARD_HOME = /home/tianyi/projects/ysyx-workbench/nvboard
+
+TOPNAME = Top_Module
+VERILATOR_CFLAGS += -MMD --build -cc  \
+				-O2 --x-assign fast --x-initial fast --noassert
+OBJ_DIR = $(BUILD_DIR)/obj_dir
+
+BIN = $(BUILD_DIR)/$(TOPNAME)
+
 
 export PATH := $(PATH):$(abspath ./utils)
+
+VSRCS = $(shell find -name "*.v")
+NVBOARD_SRCS = $(shell find $(NVBOARD_HOME)/SRC -name "*.cpp")
+NVBOARD_INC = $(NVBOARD_HOME)/include
+
+nvboard: verilog $(VSRCS) $(CSRCS)
+	verilator $(VERILATOR_CFLAGS) \
+		--top-module $(TOP_NAME) $^ \
+		$(addprefix -CFLAGS , $(CXXFLAGS)) $(addprefix -LDFLAGS , $(LDFLAGS)) \
+		--Mdir $(OBJ_DIR) --exe -o $(abspath $(BIN))
+
+testmake:
+	echo $(VSRC)
 
 test:
 	mill -i __.test
@@ -28,7 +50,7 @@ checkformat:
 clean:
 	-rm -rf $(BUILD_DIR)
 
-.PHONY: test verilog help compile bsp reformat checkformat clean
+.PHONY: nvboard test verilog help compile bsp reformat checkformat clean
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
