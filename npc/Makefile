@@ -19,7 +19,7 @@ $(SRC_AUTO_BIND): $(NXDC_FILES)
 export PATH := $(PATH):$(abspath ./utils)
 
 NVBOARD_SRCS = $(shell find $(NVBOARD_HOME)/src -name "*.cpp")
-NVBOARD_SRCS += SRC_AUTO_BIND
+NVBOARD_SRCS += $(SRC_AUTO_BIND)
 NVBOARD_INC = $(NVBOARD_HOME)/include
 
 #verilogs compiled
@@ -28,7 +28,7 @@ VERILOG_OUT = $(shell find $(abspath $(BUILD_DIR)) -name "*.v")
 #verilator project source file
 VSRCS = $(VERILOG_OUT)
 CSRCS = $(shell find $(abspath ./csrc) -name "*.c" -or -name "*.cc" -or -name "*.cpp")
-CSRCS += $(SRC_AUTO_BIND)
+#CSRCS += $(SRC_AUTO_BIND)
 
 #link flags
 LDFLAGS += $(shell sdl2-config --libs) -lSDL2_image
