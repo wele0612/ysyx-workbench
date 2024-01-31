@@ -7,8 +7,7 @@ class NVboard_IOs extends Bundle{
   val ledr=Output(UInt(16.W))
   val sw=Input(UInt(16.W))
 
-  loadDefault()
-  
+   
   def loadDefault():Unit={
     ledr:=5.U //.asTypeOf(ledr)
   }
