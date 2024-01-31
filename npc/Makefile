@@ -28,7 +28,7 @@ LDFLAGS += $(shell sdl2-config --libs) -lSDL2_image
 # rules for verilator when using nvboard
 INC_PATH += $(NVBOARD_INC)
 INCFLAGS = $(addprefix -I, $(INC_PATH))
-CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOPNAME)\""
+CXXFLAGS += $(INCFLAGS) -DTOP_NAME="\"V$(TOP_NAME)\""
 
 nvboard: verilog $(VSRCS) $(CSRCS)
 	verilator $(VERILATOR_CFLAGS) \
