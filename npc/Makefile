@@ -1,12 +1,12 @@
 BUILD_DIR = ./build
 NVBOARD_HOME = /home/tianyi/projects/ysyx-workbench/nvboard
 
-TOPNAME = Top_Module
+TOP_NAME = Top_Module
 VERILATOR_CFLAGS += -MMD --build -cc  \
 				-O2 --x-assign fast --x-initial fast --noassert
 OBJ_DIR = $(BUILD_DIR)/obj_dir
 
-BIN = $(BUILD_DIR)/$(TOPNAME)
+BIN = $(BUILD_DIR)/$(TOP_NAME)
 
 
 export PATH := $(PATH):$(abspath ./utils)
