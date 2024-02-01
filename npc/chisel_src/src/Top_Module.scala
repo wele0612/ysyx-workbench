@@ -19,5 +19,16 @@ class NVboard_IOs extends Bundle{
 }
 class Top_Module extends Module {
   val io=IO(new NVboard_IOs())
-  io.ledr:=PriorityEncoder(io.sw)
+
+  val ptwo=Module(new Plus_two())
+  ptwo.io.in:=io.sw
+  io.ledr:=ptwo.io.out
+}
+
+class Plus_two extends Module{
+  val io=IO(new Bundle {
+    val in=Input(Uint(16.W))
+    val out=Output(Uint(16.W))
+  })
+  io.out:=~io.in
 }
