@@ -4,6 +4,7 @@ import chisel3.util.Reverse
 import chisel3.util.PopCount
 import chisel3.util.OHToUInt
 import chisel3.util.PriorityEncoder
+import chisel3.util.Counter
 
 /**
  * Bundle for nvboard
@@ -21,9 +22,8 @@ class Top_Module extends Module {
   val io=IO(new NVboard_IOs())
 
   withClockAndReset(io.sw.asBools(0).asClock,io.sw.asBools(1)){
-    val myreg=RegInit(7.U(16.W))
-    myreg:=io.sw&"b1111_1111_1111_1100".asUInt
-    io.ledr:=myreg
+    val (countvalue,wrap)=Counter(true.B,8)
+    io.ledr:=countvalue
   }
 }
 
