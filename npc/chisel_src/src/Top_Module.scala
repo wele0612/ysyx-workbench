@@ -22,7 +22,7 @@ class Top_Module extends Module {
   val io=IO(new NVboard_IOs())
 
   withClockAndReset(io.sw.asBools(0).asClock,io.sw.asBools(1)){
-    val (countvalue,wrap)=Counter(true.B,8)
+    val (countvalue,wrap)=Counter(3 until 16 by 3)
     io.ledr:=countvalue
   }
 }
