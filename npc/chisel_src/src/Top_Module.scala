@@ -22,7 +22,7 @@ class Top_Module extends Module {
 
   withClockAndReset(io.sw.asBools(0).asClock,io.sw.asBools(1)){
     val myreg=RegInit(7.U(16.W))
-    myreg:=io.sw&"b1111111111111100".asUInt
+    myreg:=io.sw&"b1111_1111_1111_1100".asUInt
     io.ledr:=myreg
   }
 }
