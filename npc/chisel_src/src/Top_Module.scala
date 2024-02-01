@@ -3,6 +3,7 @@ import chisel3.util.Mux1H
 import chisel3.util.Reverse
 import chisel3.util.PopCount
 import chisel3.util.OHToUInt
+import chisel3.util.PriorityEncoder
 
 /**
  * Bundle for nvboard
@@ -18,5 +19,5 @@ class NVboard_IOs extends Bundle{
 }
 class Top_Module extends Module {
   val io=IO(new NVboard_IOs())
-  io.ledr:=OHToUInt(io.sw+1.U)
+  io.ledr:=PriorityEncoder(io.sw)
 }
