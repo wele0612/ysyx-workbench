@@ -18,5 +18,5 @@ class NVboard_IOs extends Bundle{
 }
 class Top_Module extends Module {
   val io=IO(new NVboard_IOs())
-  io.ledr:=OHToUInt(io.sw)
+  io.ledr:=OHToUInt(io.sw+1.U)
 }
