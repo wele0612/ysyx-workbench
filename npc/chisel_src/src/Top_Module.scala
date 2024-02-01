@@ -20,15 +20,10 @@ class NVboard_IOs extends Bundle{
 class Top_Module extends Module {
   val io=IO(new NVboard_IOs())
 
-  val ptwo=Module(new Plus_two())
-  ptwo.io.in:=io.sw
-  io.ledr:=ptwo.io.out
+  withClockAndReset(io.sw.asBools(0).asClock,io.sw.asBools(1)){
+    val myreg=RegInit(7.U(16.W))
+    myreg:=io.sw&"b1111111111111100".asUInt
+    io.ledr:=myreg
+  }
 }
 
-class Plus_two extends Module{
-  val io=IO(new Bundle {
-    val in=Input(UInt(16.W))
-    val out=Output(UInt(16.W))
-  })
-  io.out:= ~io.in
-}
