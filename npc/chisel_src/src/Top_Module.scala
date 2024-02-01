@@ -27,8 +27,8 @@ class Top_Module extends Module {
 
 class Plus_two extends Module{
   val io=IO(new Bundle {
-    val in=Input(Uint(16.W))
-    val out=Output(Uint(16.W))
+    val in=Input(UInt(16.W))
+    val out=Output(UInt(16.W))
   })
-  io.out:=~io.in
+  io.out:= ~io.in
 }
