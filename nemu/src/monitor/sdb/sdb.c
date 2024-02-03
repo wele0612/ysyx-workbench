@@ -184,7 +184,7 @@ static struct {
 } cmd_table [] = {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
-  { "qnemu", "Exit NEMU", cmd_q },//changed to avoid conflict with gdb
+  { "q", "Exit NEMU", cmd_q },//changed to avoid conflict with gdb
   { "si", "Singal-step execute", cmd_si},
   { "info", "info r -> print regsisters, info w -> print watch point infomation", cmd_info},
   { "x", "Scan memory. Format: x N EXPR", cmd_x},
