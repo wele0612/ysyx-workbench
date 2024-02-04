@@ -23,7 +23,7 @@ class Top_Module extends Module {
 
   
   withClockAndReset(io.sw.asBools(0).asClock,io.sw.asBools(1)){
-    val (countvalue,wrap)=Counter(3 until 16 by 3)
+    val (countvalue,wrap)=Counter(3 until 16 by 2)
     io.ledr:=countvalue
   }
 }
